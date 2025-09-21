@@ -1,5 +1,7 @@
 ---
 title: SASS
+tags:
+  - style
 ---
 > [!abstruct] 参照リンク
 > - [Sass - Wikipedia](https://ja.wikipedia.org/wiki/Sass)

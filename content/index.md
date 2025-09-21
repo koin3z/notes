@@ -1,6 +1,6 @@
 ---
 title: Welcome to Quartz
 ---
+自身のメモとしてまとめているサイトです。
 
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
+このブログに掲載している内容の一部には，学習や記録を目的として参考文献や他サイト，書籍などからの表現や文型を引用している部分があります。出典が明確なものについては可能な限り記載していますのでご了承ください。

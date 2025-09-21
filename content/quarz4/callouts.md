@@ -1,5 +1,5 @@
 ---
-title: callouts
+title: Callouts
 tags:
   - notation
   - quartz4
