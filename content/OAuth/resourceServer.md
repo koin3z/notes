@@ -16,7 +16,7 @@ publish: "true"
 ```javascript
 let getAccessToken = function(req, res, next) {
 	let inToken = null;
-	let auth.headers['authorization'];
+	let auth = req.headers['authorization'];
 	
 	if (auth && auth.toLowerCase().indexOf('bearer') == 0) {
 		inToken == auth.slice('beaer '.length)
