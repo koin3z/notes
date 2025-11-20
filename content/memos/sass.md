@@ -38,11 +38,11 @@ tags:
 	- パフォーマンス最適化
 	- チーム開発時の一貫性保持
 
-## SCSSとは
+## SCSS
 - Sassy Cascading Style Sheets の略
 - CSSの拡張機能でCSSと完全互換性を持つ
 	- そのため，CSSファイルをそのままSCSSファイルとしてコピペしても動く
-- [[sass]]（Syntactically Awesome Style Sheets）の2つの文法のうちの一つ
+- sass（Syntactically Awesome Style Sheets）の2つの文法のうちの一つ
 
 - `*.scss`ファイルは最終的にブラウザに対応するCSSファイルにコンパイルされる
 
