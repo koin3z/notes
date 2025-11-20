@@ -11,7 +11,6 @@ publish: "true"
 > - [Callouts - Quartz 4](https://quartz.jzhao.xyz/features/callouts)（参考としてデザイン一覧もある）
 
 ## 基本
-
 Quatrzでは次の12種類がデフォルトで用意されている。
 - abstruct
 - info
