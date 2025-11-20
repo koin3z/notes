@@ -2,7 +2,7 @@
 title: Oh My Zshで使うフォントをVSCodeにいれる
 tags:
   - Troubleshoot
-  - vscode
+  - VSCode
 ---
 ## 現象
 
