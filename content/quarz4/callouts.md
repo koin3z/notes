@@ -31,6 +31,7 @@ Quatrzでは次の12種類がデフォルトで用意されている。
 > [!abstruct] Here is a Title
 > This is a callout!
 ```
+
 > [!abstruct] Here is a Title
 > 
 > This is a callout!
@@ -40,6 +41,7 @@ Quatrzでは次の12種類がデフォルトで用意されている。
 ```
 > [!info] Title-only callout
 ```
+
 > [!info] Title-only callout
 
 ## 折りたたみ
@@ -48,6 +50,7 @@ Quatrzでは次の12種類がデフォルトで用意されている。
 > [!todo]- Are callouts foldable?
 > Yes! In a foldable callout, the contents are hidden when the callout is collapsed.
 ```
+
 > [!todo]- Are callouts foldable?
 > Yes! In a foldable callout, the contents are hidden when the callout is collapsed.
 
@@ -65,6 +68,7 @@ Quatrzでは次の12種類がデフォルトで用意されている。
 > 
 > Additional text outside. （1行空ける必要がある）
 ```
+
 > [!tip] Here is a Title
 > This is a high-level callout, often used for summaries or key points.
 > 
