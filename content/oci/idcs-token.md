@@ -1,0 +1,202 @@
+---
+title: Identity Domains で生成されるトークンサンプル
+date: 2025-11-23
+update: 2025-11-23
+draft: false
+tags:
+  - OAuth
+  - 認証
+  - OIDC
+aliases:
+  - 
+description: Identity Domains で生成されるトークンサンプル
+---
+OCI IAM Identity Domains で発行されるトークンのサンプル
+
+## Access Token
+
+### ヘッダー
+
+```json
+{
+  "x5t#S256": "TBoKExKiK4EwfN--Niu2tOX1gSI_q7q8ag09Ef2Tbm0",
+  "x5t": "5zhuAWbnp2LW7cr9O_rzZgeb60I",
+  "kid": "SIGNING_KEY",
+  "alg": "RS256"
+}
+```
+
+### ペイロード
+
+```json
+{
+  "client_ocid": "ocid1.domainapp.oc1.iad.<applicationOcid>",
+  "user_tz": "America/Chicago",
+  "sub": "User01 - Dev Domain",
+  "user_locale": "ja",
+  "sidle": 480,
+  "idp_name": "UserNamePassword",
+  "user.tenant.name": "idcs-<domainUrl>",
+  "idp_guid": "UserNamePassword",
+  "amr": [
+    "USERNAME_PASSWORD"
+  ],
+  "iss": "https://identity.oraclecloud.com/",
+  "domain_home": "us-ashburn-1",
+  "ca_ocid": "ocid1.tenancy.oc1..<tenantOcid>",
+  "user_tenantname": "idcs-<domainUrl>",
+  "client_id": "<client_id>",
+  "sid": "a717ca40ce164b1ca595bcf152e10697:fa2d9d",
+  "domain_id": "ocid1.domain.oc1..<domainOcid>",
+  "sub_type": "user",
+  "scope": "urn:opc:idm:t.security.client openid urn:opc:idm:t.user.me urn:opc:idm:t.user.me.passwordvalidator urn:opc:idm:t.user.authn.factors",
+  "user_ocid": "ocid1.user.oc1..<userOcid>",
+  "client_tenantname": "idcs-<domainUrl>",
+  "region_name": "us-ashburn-idcs-1",
+  "user_lang": "en",
+  "userAppRoles": [
+    "Authenticated"
+  ],
+  "exp": 1763909141,
+  "iat": 1763905541,
+  "client_guid": "<applicationId>",
+  "client_name": "Postman - Confidential Client",
+  "idp_type": "LOCAL",
+  "tenant": "idcs-<domainUrl>",
+  "jti": "30ddadef731f45dfa45da0ca5d4ac842",
+  "gtp": "azc",
+  "user_displayname": "user-dev-01",
+  "opc": false,
+  "sub_mappingattr": "userName",
+  "primTenant": false,
+  "tok_type": "AT", // Token Type
+  "aud": [
+    "https://idcs-<domainUrl>.identity.oraclecloud.com",
+    "https://idcs-<domainUrl>.us-ashburn-idcs-1.secure.identity.oraclecloud.com",
+    "https://idcs-<domainUrl>.identity.oraclecloud.com:443",
+    "urn:opc:lbaas:logicalguid=idcs-<domainUrl>"
+  ],
+  "ca_name": "<tenancyName>",
+  "user_id": "c7dfb14d6530414e97dd2064fe23c695",
+  "domain": "koit-domain-iad-dev",
+  "clientAppRoles": [
+    "DB Administrator",
+    "Global Viewer",
+    "Authenticated Client",
+    "Identity Domain Administrator"
+  ],
+  "tenant_iss": "https://idcs-<domainUrl>.identity.oraclecloud.com:443"
+}
+```
+
+## ID Token
+
+- `responce_type` に `idtoken` を含めずとももらえる
+
+- ヘッダー
+```json
+{
+  "x5t#S256": "TBoKExKiK4EwfN--Niu2tOX1gSI_q7q8ag09Ef2Tbm0",
+  "x5t": "5zhuAWbnp2LW7cr9O_rzZgeb60I",
+  "kid": "SIGNING_KEY",
+  "alg": "RS256"
+}
+```
+
+### ペイロード
+
+```json
+{
+  "user_tz": "America/Chicago",
+  "client_ocid": "ocid1.domainapp.oc1.iad.<applicationOcid>",
+  "at_hash": "98HIYHGEwWEQ4AWa5nPSHA",
+  "sub": "User01 - Dev Domain",
+  "user_locale": "ja",
+  "idp_name": "UserNamePassword",
+  "sidle": 480,
+  "idp_guid": "UserNamePassword",
+  "amr": [ // 使用された認証方法
+    "USERNAME_PASSWORD"
+  ],
+  "iss": "https://identity.oraclecloud.com/", // トークンを発行したプリンシパル（認可サーバー）
+  "ca_ocid": "ocid1.tenancy.oc1..<tenantOcid>",
+  "user_tenantname": "idcs-<domainUrl>",
+  "client_id": "<client_id>",
+  "sid": "a717ca40ce164b1ca595bcf152e10697:fa2d9d",
+  "domain_id": "ocid1.domain.oc1..<domainOcid>",
+  "authn_strength": "2",
+  "azp": "<client_id>",
+  "auth_time": 1763905537,
+  "user_ocid": "ocid1.user.oc1..<userOcid>",
+  "session_exp": 1763934337,
+  "client_tenantname": "idcs-<domainUrl>",
+  "region_name": "us-ashburn-idcs-1",
+  "user_lang": "en",
+  "exp": 1763934337,
+  "iat": 1763905541,
+  "client_name": "Postman - Confidential Client",
+  "client_guid": "<applicationId>",
+  "idp_type": "LOCAL",
+  "tenant": "idcs-<domainUrl>",
+  "jti": "a2d76d76fd8a49b5b2790fc7f3f18172",  // JWT ID
+  "user_displayname": "user-dev-01",
+  "sub_mappingattr": "userName",
+  "primTenant": false,
+  "tok_type": "IT", // Token Type
+  "aud": [
+    "https://identity.oraclecloud.com/",
+    "<client_id>"
+  ],
+  "ca_name": "<tenancyName>",
+  "user_id": "c7dfb14d6530414e97dd2064fe23c695",
+  "domain": "koit-domain-iad-dev",
+  "tenant_iss": "https://idcs-<domainUrl>.identity.oraclecloud.com:443",
+  "pulp": "MyApps"
+}
+```
+
+
+## UserInfo 
+
+- `openid` だけでも以下の情報は得られる
+
+```json
+{
+    "birthdate": "",
+    "family_name": "user-dev-01",
+    "gender": "",
+    "name": "user-dev-01",
+    "preferred_username": "User01 - Dev Domain",
+    "sub": "User01 - Dev Domain",
+    "updated_at": 1763905537,
+    "website": ""
+}
+```
+
+- profile以上を含めると、同意を求められる
+
+```
+https://idcs-<domainUrl>.identity.oraclecloud.com/ui/v1/myconsole/consent
+```
+
+![[Pasted image 20251123231323.png]]
+
+
+```json
+{
+    "birthdate": "",
+    "email": "<alice@wonderland.com>",
+    "email_verified": true,
+    "family_name": "user-dev-01",
+    "gender": "",
+    "name": "user-dev-01",
+    "preferred_username": "User01 - Dev Domain",
+    "sub": "User01 - Dev Domain",
+    "updated_at": 1763905537,
+    "website": ""
+}
+```
+
+## 参照リンク
+- https://docs.oracle.com/ja-jp/iaas/Content/Identity/api-getstarted/usingopenidconnect.htm
+- https://www.slideshare.net/slideshow/ochacafe5/141546360
