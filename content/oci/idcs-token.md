@@ -93,7 +93,8 @@ OCI IAM Identity Domains で発行されるトークンのサンプル
 
 - `responce_type` に `idtoken` を含めずとももらえる
 
-- ヘッダー
+### ヘッダー
+
 ```json
 {
   "x5t#S256": "TBoKExKiK4EwfN--Niu2tOX1gSI_q7q8ag09Ef2Tbm0",
