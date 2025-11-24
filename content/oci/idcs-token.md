@@ -35,11 +35,11 @@ OCI IAM Identity Domains で発行されるトークンのサンプル
   "sub": "User01 - Dev Domain",
   "user_locale": "ja",
   "sidle": 480,
-  "idp_name": "UserNamePassword",
+  "idp_name": "UserNamePassword", // IdP Name
   "user.tenant.name": "idcs-<domainUrl>",
-  "idp_guid": "UserNamePassword",
+  "idp_guid": "UserNamePassword", // 外部IdPの場合，idp_nameとは別のランダム文字列のIDが表示
   "amr": [
-    "USERNAME_PASSWORD"
+    "USERNAME_PASSWORD" // SAMLの場合は「SAML」
   ],
   "iss": "https://identity.oraclecloud.com/",
   "domain_home": "us-ashburn-1",
@@ -61,7 +61,7 @@ OCI IAM Identity Domains で発行されるトークンのサンプル
   "iat": 1763905541,
   "client_guid": "<applicationId>",
   "client_name": "Postman - Confidential Client",
-  "idp_type": "LOCAL",
+  "idp_type": "LOCAL", // 外部IdPによるSAMLの場合は「SAML」
   "tenant": "idcs-<domainUrl>",
   "jti": "30ddadef731f45dfa45da0ca5d4ac842",
   "gtp": "azc",
