@@ -1,7 +1,7 @@
 ---
-title: OAuthグラントタイプ
-date: 2025-11-20
-update: 2025-11-20
+title: Untitled
+date: 2025-12-06
+update: 2025-12-06
 draft: false
 tags:
   - 
