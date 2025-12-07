@@ -55,7 +55,7 @@ sequenceDiagram
     RO->>AS: 3. 同意
     AS->>Client: 4. 認可コード(Authorization Code)返却
 
-    Note over Client, AS: 【直接通信】
+    Note over Client, AS: 【バックチャネル】
     Client->>AS: 5. トークンリクエスト<br>(code + code_verifier)
     Note right of AS: code_verifierをハッシュ化し<br>1.で受け取ったchallengeと照合
     AS->>Client: 6. 検証OKならアクセストークン発行
