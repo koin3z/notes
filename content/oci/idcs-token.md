@@ -221,7 +221,7 @@ scope=urn:opc:idm:__myscopes__
 assertion={{authnToken}}
 ```
 
-- 取得したアクセストークンは `/admin/v1/Me` とか `/admin/v1/MyGroups` とか　　`/admin/v1/MyApps` なんかで，そのユーザー自身の情報を取得するのに使うのが一般的だろうか
+- 取得したアクセストークンは `/admin/v1/Me` とか `/admin/v1/MyGroups` とか　`/admin/v1/MyApps` なんかで，そのユーザー自身の情報を取得するのに使うのが一般的だろうか
 
 - 以下，`authToken` をデコードしたもの
 - IDトークンとほぼ同じ
