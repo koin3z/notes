@@ -11,7 +11,7 @@ description: MCP認可について
 ---
 ## 概要
 - MCPにおいて，認証の実装はオプション
-- サポートする場合
+- 認証機能を実装する場合
 	- HTTP Transport に準拠する必要がある（**SHOULD**）
 	- 一方，STDIO Transport を使用する場合はこの仕様に従わない（**SHOULD NOT**）
 	- 代替のTransportを仕様する場合は，そのプロトコルのベストプラクティスに従う（**MUST**）
@@ -19,8 +19,8 @@ description: MCP認可について
 - 参照する標準は以下の通り
 	- <u>OAuth 2.1 IETF DRAFT</u> ([draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13))
 		- 認可サーバーはOAuth2.1を実装する必要がある（**MUST**）
-	- <u>OAuth 2.0 Authorization Server Metadata </u>([RFC8414](https://datatracker.ietf.org/doc/html/rfc8414))
-		- 認可サーバーはこれか [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html) の検出メカニズムを最低1つは提供する必要がある（**MUST**）
+	- <u>OAuth 2.0 Authorization Server Metadata </u>([RFC8414](https://datatracker.ietf.org/doc/html/rfc8414)) or [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html)
+		- 認可サーバーはどちらかの検出メカニズムを最低1つは提供する必要がある（**MUST**）
 		- また，MCPクライアントは認可サーバーの情報を取得するため，上記2つの検出メカニズムをサポートする必要がある（MUST）
 	- <u>OAuth 2.0 Dynamic Client Registration Protocol</u> ([RFC7591](https://datatracker.ietf.org/doc/html/rfc7591))
 		- MCPサーバーは動的クライアント登録をサポートする場合がある（**MAY**）
@@ -35,7 +35,7 @@ description: MCP認可について
 	- アクセストークンを利用し，保護されたリソースへのリソースを受け付ける
 - MCPクライアント
 	- OAuth クライアントとして機能
-	- リソースオーナーに変わってリクエストを行う
+	- リソースオーナーに代わってリクエストを行う
 - 認可サーバー
 	- MCPサーバーにて使用するアクセストークンを発行
 
@@ -46,10 +46,10 @@ description: MCP認可について
 #### ステップ１「認可サーバーのディスカバリ」
 - MCPクライアントは，アクセスしたいMCPサーバーがどの認可サーバーを使用しているかを知る必要がある
 - この発見フローには以下の2つの方法があり，クライアントは両方サポートする必要がある（**MUST**: [RFC9728 - OAuth 2.0 Protected Resource Metadata ](https://datatracker.ietf.org/doc/html/rfc9728)）
-	- なお，MCPクライアントはまずはヘッダーを確認し，それがなければWell-Know URIにフォールバックする
 
 1. `WWW-Authenticateヘッダー`
 	- クライアントが認証なしでリクエストを送った場合，サーバーは401を返却し，ヘッダー内の`resource_metadata`にてメタデータのURLを含める
+	- MCPクライアントはまずはこのヘッダー方式を確認し，それがなければWell-Know URIにフォールバックする
 ```http
 HTTP/1.1 401 Unauthorized
 WWW-Authenticate: Bearer resource_metadata="https://mcp.example.com/.well-known/oauth-protected-resource",scope="files:read"
@@ -57,19 +57,18 @@ WWW-Authenticate: Bearer resource_metadata="https://mcp.example.com/.well-known/
 
 - なお，MCPサーバーはこのとき，リソースのアクセスに必要なスコープをヘッダーに含めるべき（**SHOULD**）
 	- 過剰なスコープ要求を防ぐため
-	- このとき，含まれるスコープは`scopes_supported`に含まれていない場合がある（Subset, Superset, Alternativeのどれか）
-	- ここに記載されるスコープは"絶対に正式なもの"として扱い（**MUST**），MCPクライアントは勝手にこのスコープを間違いだと判断してはいけない
-- `scope`パラメータがない場合は，スコープ選択のストラテジーにて定義される動作にフォールバックする
+	- このとき含まれるスコープは，このあとのメタデータにて公開される`scopes_supported`パラメータに含まれていない場合がある（Subset, Superset, Alternativeのどれか）
+	- ただ，ここに記載されるスコープは"絶対に正式なもの"として扱い（**MUST**），MCPクライアントは勝手にこのスコープを間違いだと判断してはいけない
+- `scope`パラメータがない場合は，後述の`ステップ４「スコープの選択と要求」`にて定義される動作にフォールバックする
 
 2. `Well-Known URI`
-	- どちらかが使用できる
+	- MCPサーバーが動作するURIに応じて，どちらかが使用できる
 		- MCPサーバーがサブディレクトリで動作する場合
 			- MCPサーバー: `https://example.com/public/mcp`
 			- メタデータ: `https://example.com/.well-known/oauth-protected-resource/public/mcp`
 			- 1つのドメインの中に異なるMCPサーバーがある場合でもそれぞれ別の設定ファイルをもてるようにしている
 		- MCPサーバーがルートで動作する場合
 			- メタデータ: `.well-known/oauth-protected-resource`
-
 
 - クライアント・メタデータ・レスポンスのサンプル
 ```http
@@ -95,9 +94,9 @@ Content-Type: application/json
 
 #### ステップ２「認可サーバーのメタデータ取得」
 - MCPクライアントは認可サーバーと対話する前にOAuthクライアントとして登録する/されている必要がある
-- が，そもそもその前に認可サーバーの情報（メタデータ）を取得する必要がある
+	- が，そもそもその前に認可サーバーの情報（メタデータ）を取得する必要がある
 - この認可サーバーのメタデータの取得方法としてはいくつかの方法があり，以下の優先度で順に行う必要がある（**MUST**）
-	- なお，エンドポイントは先程の`authorization_servers`をにパスが含まれるかで分かれる
+	- なお，ここで使用する認可サーバーのエンドポイントは，先程の`authorization_servers`にパスが含まれるかで分かれる
 
 - パスが含まれる場合
 	1. OAuth 2.0 認可サーバー メタデータ
@@ -125,14 +124,14 @@ Content-Type: application/json
 - そして，MCPクライアントは認可サーバーの位置を把握したが，対話する前にOAuthクライアントとして登録する/されている必要がある
 - このクライアントの登録方法として3つの方法があり，シナリオに応じていづれかを選択する
 	- なお，すべての方法をサポートする場合は以下の優先度に従う
-1. 静的クライアント登録
+1. <u>静的クライアント登録</u>
 	- 事前に登録しておき，そのクライアント情報を使用する
-2. Client ID Metadata Documents（**SHOULD**: [draft-ietf-oauth-client-id-metadata-document-00](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00)）
+2. <u>Client ID Metadata Documents</u>（**SHOULD**: [draft-ietf-oauth-client-id-metadata-document-00](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00)）
 	- 事前設定がない場合，最も一般的な方法
 	- クライアントは自身のメタデータ（名前，リダイレクトURIなど）を指すHTTPS URLを`client_id`として使用する
 		- URLはクラリアントメタデータを含むJSONオブジェクトを指す
 	- 認可サーバーがサポートしているかどうかは，メタデータの `client_id_metadata_document_supported`を参照する
-3. 動的クライアント登録（**MAY**: [RFC 7591 - OAuth 2.0 Dynamic Client Registration Protocol](https://datatracker.ietf.org/doc/html/rfc7591)）
+3. <u>動的クライアント登録</u>（**MAY**: [RFC 7591 - OAuth 2.0 Dynamic Client Registration Protocol](https://datatracker.ietf.org/doc/html/rfc7591)）
 	- 下位互換性または特定の要件用
 	- 認可サーバーがサポートしているかどうかは，メタデータの`registration_endpoint`を参照する
 4. どれも利用できない場合は，ユーザーにクライアント情報の入力を促す
@@ -172,7 +171,7 @@ Content-Type: application/json
 #### ステップ４「スコープの選択と要求」
 - クライアントは「最小権限の原則」に従い，必要な分のスコープを要求する
 - 最初の401レスポンスに`scope`パラメータが含まれている場合はそれを使用する
-- 含まれていない場合，メタデータドキュメント内の`scopes_supported`から使用する
+- 含まれていない場合，メタデータドキュメント内の`scopes_supported`から全部(!!)使用する
 	- `scopes_supported`が未定義の場合は`scope`パラメータは省略する
 - `scopes_supported`は基本機能に必要な最小限のスコープセットを使用させることを目的とする
 	- 足りない場合は，後述するステップアップ認可フローの手順にて，スコープを追加で獲得していく
@@ -184,7 +183,7 @@ Content-Type: application/json
 		- S256 challengeを使用する
 		- 認可サーバーがPKCEに対応しているかを確認する手段がOAuth2.1及びPKCEの仕様では定義されていないので，認可サーバーのメタデータをつかって検証する必要がある（**MUST**）
 			- `code_challenge_methods_supported`が存在しない場合，MCPクライアントは続行を拒否する（**MUST**）
-			- OIDC ディスカバリエンドポイントでは，上のパラメータが定義されていないが，一般的なOIDCプロバイダーはこのパラメータを含んでいる（?!）。同様に`code_challenge_methods_supported`が存在しない場合，MCPクライアントは続行を拒否する（**MUST**）
+			- OIDC ディスカバリエンドポイントでは，上のパラメータが定義されていないが，一般的なOIDCプロバイダーはこのパラメータを含んでいる(?!)。同様に`code_challenge_methods_supported`が存在しない場合，MCPクライアントは続行を拒否する（**MUST**）
 				- そのため，OIDC ディスカバリエンドポイントを提供する認可サーバーは，MCPの互換性のため，`code_challenge_methods_supported`を含める必要がある
 	- [RFC 8707 - Resource Indicators for OAuth 2.0](https://datatracker.ietf.org/doc/html/rfc8707)
 		- トークンを使用する対象のMCPサーバーのURIを明示的に指定する必要がある（**MUST**）
@@ -220,16 +219,17 @@ Content-Type: application/x-www-form-urlencoded
 
 grant_type=authorization_code &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb &code=10esc29BWC2qZB0acc9v8zAv9ltc2pko105tQauZ &resource=https%3A%2F%2Fcal.example.com%2F
 ```
+
 #### ステップ５「アクセストークンの使用」
 - トークンを無事取得後，MCPクライアントはMCPサーバーへのリクエストにトークンを含める
-	- トークンは`Authorization`ヘッダーに入れる
+	- トークンは`Authorization`ヘッダーに入れて使用する
 
 #### ステップ６「トークンの検証」
 - MCPサーバーは受け取ったトークンを検証する
 - トークンが有効であり，かつ`audience`が自分自身であることを確認
 
 - 権限不足が発生した場合は「HTTP 403 Forbidden」を返却し，以下のステップアップ認可フローが行われる
-	1. サーバーは`WWW-Ahthenticate`ヘッダーで`error="insufficient_scope`とともに，必要な追加スコープ`scope="XXX..."`を返す
+	1. サーバーは`WWW-Authenticate`ヘッダーで`error="insufficient_scope"`とともに，必要な追加スコープ`scope="XXX..."`を返す
 	2. クライアントはこの情報を解析し，不足したスコープを含めて再度認可フローを開始する
 	3. 新しいトークンを取得したら，元のリクエストを再試行する
 
@@ -237,6 +237,7 @@ grant_type=authorization_code &redirect_uri=https%3A%2F%2Fclient.example.org%2Fc
 ## メモ
 - EntraIDでは動的クライアント登録の機能実装について，ロードマップにはないと回答（2025/8/21）
 	- https://learn.microsoft.com/en-us/answers/questions/5516363/does-entraid-has-a-plan-to-introduce-dynamic-clien
+
 
 ## 参照リンク
 - https://tex2e.github.io/rfc-translater/html/rfc9728.html
