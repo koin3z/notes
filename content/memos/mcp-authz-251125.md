@@ -18,18 +18,17 @@ https://modelcontextprotocol.io/specification/2024-11-05
 	- 一方，STDIO Transport を使用する場合はこの仕様に従わない（**SHOULD NOT**）
 	- 代替のTransportを仕様する場合は，そのプロトコルのベストプラクティスに従う（**MUST**）
 
-- 参照する標準は以下の通り
-	- <u>OAuth 2.1 IETF DRAFT</u> ([draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13))
-		- 認可サーバーはOAuth2.1を実装する必要がある（**MUST**）
-	- <u>OAuth 2.0 Authorization Server Metadata </u>([RFC8414](https://datatracker.ietf.org/doc/html/rfc8414)) or [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html)
-		- 認可サーバーはどちらかの検出メカニズムを最低1つは提供する必要がある（**MUST**）
-		- また，MCPクライアントは認可サーバーの情報を取得するため，上記2つの検出メカニズムをサポートする必要がある（MUST）
-	- <u>OAuth 2.0 Dynamic Client Registration Protocol</u> ([RFC7591](https://datatracker.ietf.org/doc/html/rfc7591))
-		- MCPサーバーは動的クライアント登録をサポートする場合がある（**MAY**）
 	- <u>OAuth 2.0 Protected Resource Metadata</u> ([RFC9728](https://datatracker.ietf.org/doc/html/rfc9728))
-		- MCPサーバーは実装する必要がある（**MUST**）
-	- <u>OAuth Client ID Metadata Documents</u> ([draft-ietf-oauth-client-id-metadata-document-00](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00))
-		- 認可サーバーとMCPクライアントはOAuth Client ID Metadataをサポートする必要がある（**SHOULD**）
+
+| フロー             | 関係者                            | 標準                                                                                                                                                                                                                    | 説明                                                                                                                                 |
+| --------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 認可サーバーの場所の検出    | MCPクライアント<br>MCPサーバー           | <u>OAuth 2.0 Protected Resource Metadata</u> ([RFC9728](https://datatracker.ietf.org/doc/html/rfc9728))                                                                                                               | MCPサーバー<br>- 認可サーバーの位置を教えるため，実装する（**MUST**）<br><br>MCPクライアント<br>- 使用する必要がある（**MUST**）                                              |
+| 認可サーバーのメタデータの検出 | MCPクライアント<br>認可サーバー            | <u>OAuth 2.0 Authorization Server Metadata </u>([RFC8414](https://datatracker.ietf.org/doc/html/rfc8414))                                                                                                             | 認可サーバー<br>- 下記とどちらかの検出メカニズムを最低1つは提供する必要がある（**MUST**）<br><br>MCPクライアント<br>- 認可サーバーの情報を取得するため，下記を含めて両方の検出メカニズムをサポートする必要がある（**MUST**） |
+|                 | MCPクライアント<br>認可サーバー            | [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html) <font color="#ff0000">new</font>                                                                                           | MCPクライアント<br>- 認可サーバーの情報を取得するため，上記を含めて両方の検出メカニズムをサポートする必要がある（**MUST**）<br><br>認可サーバー<br>- 上記とどちらかの検出メカニズムを最低1つは提供する必要がある（**MUST**） |
+| クライアント登録        | MCPクライアント<br>認可サーバー            | <u>OAuth 2.0 Dynamic Client Registration Protocol</u> ([RFC7591](https://datatracker.ietf.org/doc/html/rfc7591))                                                                                                      | MCPクライアント<br>- 動的クライアント登録をサポートする場合がある（**MAY**）<br><br>認可サーバー<br>- 動的クライアント登録をサポートする場合がある（**MAY**）                                  |
+|                 | MCPクライアント<br>認可サーバー            | <u>OAuth Client ID Metadata Documents</u> ([draft-ietf-oauth-client-id-metadata-document-00](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00)) <font color="#ff0000">new</font> | MCPクライアント<br>- サポートする必要がある（**SHOULD**）<br><br>認可サーバー<br>- サポートする必要がある（**SHOULD**）                                                  |
+| トークン発行・使用       | MCPクライアント<br>MCPサーバー<br>認可サーバー | <u>OAuth 2.1 IETF DRAFT</u> ([draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13))                                                                                              | 認可サーバー<br>- 機密クライアントとパブリッククライアントの両方に対して，OAuth2.1を実装する必要がある（**MUST**）                                                               |
+|                 | MCPクライアント<br>MCPサーバー<br>認可サーバー | Resource Indicators for OAuth 2.0 ([RFC 8707](https://www.rfc-editor.org/rfc/rfc8707.html))                                                                                                                           | MCPクライアント<br>- 認可サーバーがサポートしているかにかかわらず，トークンが要求されている対象リソースを明示的に指定する必要がある（**MUST**）                                                   |
 
 ## 登場人物
 - MCPサーバー

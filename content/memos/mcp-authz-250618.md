@@ -17,7 +17,6 @@ https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization
 > 	- 25年3月仕様ではMCPサーバーがホストしていたため同じドメインを使用できたが，見知らぬサードパーティの認可サーバーがホストできるようになったことから，認可サーバーを具体的に検出するフローが加えられた
 > 	- ここで使われる仕様として，「OAuth 2.0 Protected Resource Metadata (RFC9728)」が採用されている
 > 		- 新しく追加されたRFCはこれのみ
-> 	- 
 
 ## 前提
 - MCPにおいて，認証の実装はオプションとなる
@@ -28,12 +27,13 @@ https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization
 
 - 参照する標準は以下の通り
 
-| フロー             | 標準                                                                                                                                     | 説明                                                                                                                                   |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| 認可サーバーの場所の検出    | <u>OAuth 2.0 Protected Resource Metadata</u> ([RFC9728](https://datatracker.ietf.org/doc/html/rfc9728)<font color="#ff0000">new</font> | MCPサーバー<br>- 認可サーバーの位置を教えるため，実装する（**MUST**）                                                                                          |
-| 認可サーバーのメタデータの検出 | <u>OAuth 2.0 Authorization Server Metadata </u>([RFC8414](https://datatracker.ietf.org/doc/html/rfc8414))                              | ~~認可サーバー<br>- 実装すべき（**SHOULD**）<br>- これをサポートしない認可サーバーは，デフォルトのURIスキーマに従う必要がある（**MUST**）~~<br><br>MCPクライアント<br>- 実装しなくてはならない（**MUST**） |
-| クライアント登録        | <u>OAuth 2.0 Dynamic Client Registration Protocol</u> ([RFC7591](https://datatracker.ietf.org/doc/html/rfc7591))                       | MCPサーバー<br>- サポートすべき（**SHOULD**）<br><br>認可サーバー<br>- サポートすべき（**SHOULD**）                                                              |
-| トークン発行・使用       | <u>OAuth 2.1 IETF DRAFT</u> ([draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13))               | ~~機密クライアントとパブリッククライアントの両方に対して，適切なOAuth2.1を実装する必要がある（**MUST**）~~<br>認可サーバー<br>- OAuth2.1を実装する必要がある（**MUST**）                          |
+| フロー             | 標準                                                                                                                                                        | 説明                                                                               |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| 認可サーバーの場所の検出    | <u>OAuth 2.0 Protected Resource Metadata</u> ([RFC9728](https://datatracker.ietf.org/doc/html/rfc9728)<font color="#ff0000">new</font>                    | MCPサーバー<br>- 認可サーバーの位置を教えるため，実装する（**MUST**）                                      |
+| 認可サーバーのメタデータの検出 | <u>OAuth 2.0 Authorization Server Metadata </u>([RFC8414](https://datatracker.ietf.org/doc/html/rfc8414))                                                 | 認可サーバー<br>- 実装すべき（**SHOULD**）<br><br>MCPクライアント<br>- 実装しなくてはならない（**MUST**）        |
+| クライアント登録        | <u>OAuth 2.0 Dynamic Client Registration Protocol</u> ([RFC7591](https://datatracker.ietf.org/doc/html/rfc7591))                                          | MCPクライアント<br>- サポートすべき（**SHOULD**）<br><br>認可サーバー<br>- サポートすべき（**SHOULD**）        |
+| トークン発行・使用       | <u>OAuth 2.1 IETF DRAFT</u> ([draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13))                                  | 認可サーバー<br>- 機密クライアントとパブリッククライアントの両方に対して，適切なOAuth2.1を実装する必要がある（**MUST**）          |
+|                 | Resource Indicators for OAuth 2.0 ([RFC 8707](https://www.rfc-editor.org/rfc/rfc8707.html)) <font color="#ff0000">new                             </font> | MCPクライアント<br>- 認可サーバーがサポートしているかにかかわらず，トークンが要求されている対象リソースを明示的に指定する必要がある（**MUST**） |
 
 ## 登場人物
  - MCPサーバー
@@ -84,6 +84,22 @@ https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization
 	- この場合，以下のどちらかになる
 		1. 認可サーバーと対話する際に使用するclient_idをハードコードする
 		2. ユーザーが自分でOAuthクライアント登録を行い，これらの詳細を入力できるUIを提示する
+
+
+### 4. トークン発行・使用
+- MCPクライアントはリソースインジケーター（RFC8707）を実装し，トークンが要求されている対象リソースを明示的に指定する必要がある（**MUST**）
+- 以下すべてMUST
+	1. 認可リクエストとトークンリクエストの両方に含める
+	2. クライアントがトークンを使用する予定のMCPサーバーを識別する
+	3. Section 2で定義されるMCPサーバーの正規URIを使用する
+
+- 正規URIは，可能な限り具体的なURIを指定する
+	- スキームがなかったり，フラグメントを持つものは無効
+- MCPクライアントは認可サーバーがサポートしているかに関係なく，このパラメータを送信する必要がある
+
+- また，トークンはAuthorizationヘッダーに含めることで使用する
+- 同じセッションでも常にHTTPリクエストに含める必要がある
+
 
 ## 全体フロー
 
