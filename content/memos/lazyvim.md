@@ -11,7 +11,7 @@ description: このページの内容についての簡単な説明
 ---
 ## インストール
 
-ということで，`LazyVim`をインストールする
+- `LazyVim`をインストールする
 	- 日本語の`README.md`もある
 		- https://github.com/LazyVim/LazyVim/blob/main/README-JP.md
 ```shell
