@@ -1,5 +1,5 @@
 ---
-title: MCP Authorization
+title: MCP Authorization (Version 2025-11-25)
 date: 2025-12-10
 update: 2025-12-10
 draft: false
@@ -9,8 +9,10 @@ aliases:
   - 
 description: MCP認可について
 ---
-## 概要
-- MCPにおいて，認証の実装はオプション
+https://modelcontextprotocol.io/specification/2024-11-05
+
+## 前提
+- MCPにおいて，認証の実装はオプションとなる
 - 認証機能を実装する場合
 	- HTTP Transport に準拠する必要がある（**SHOULD**）
 	- 一方，STDIO Transport を使用する場合はこの仕様に従わない（**SHOULD NOT**）
@@ -28,8 +30,8 @@ description: MCP認可について
 		- MCPサーバーは実装する必要がある（**MUST**）
 	- <u>OAuth Client ID Metadata Documents</u> ([draft-ietf-oauth-client-id-metadata-document-00](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00))
 		- 認可サーバーとMCPクライアントはOAuth Client ID Metadataをサポートする必要がある（**SHOULD**）
-## 登場人物
 
+## 登場人物
 - MCPサーバー
 	- OAuth リソースサーバーとして機能
 	- アクセストークンを利用し，保護されたリソースへのリソースを受け付ける
