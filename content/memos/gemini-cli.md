@@ -10,75 +10,6 @@ aliases:
 description: Gemin CLI
 ---
 
-## セットアップ
-
-```bash
-→ npx https://github.com/google-gemini/gemini-cli
-Need to install the following packages:
-github:google-gemini/gemini-cli
-Ok to proceed? (y) y
-
-
- ███            █████████  ██████████ ██████   ██████ █████ ██████   █████ █████
-░░░███         ███░░░░░███░░███░░░░░█░░██████ ██████ ░░███ ░░██████ ░░███ ░░███
-  ░░░███      ███     ░░░  ░███  █ ░  ░███░█████░███  ░███  ░███░███ ░███  ░███
-    ░░░███   ░███          ░██████    ░███░░███ ░███  ░███  ░███░░███░███  ░███
-     ███░    ░███    █████ ░███░░█    ░███ ░░░  ░███  ░███  ░███ ░░██████  ░███
-   ███░      ░░███  ░░███  ░███ ░   █ ░███      ░███  ░███  ░███  ░░█████  ░███
- ███░         ░░█████████  ██████████ █████     █████ █████ █████  ░░█████ █████
-░░░            ░░░░░░░░░  ░░░░░░░░░░ ░░░░░     ░░░░░ ░░░░░ ░░░░░    ░░░░░ ░░░░░
-
-                                              v0.21.0-nightly.20251207.025e450ac
-Tips for getting started:
-1. Ask questions, edit files, or run commands.
-2. Be specific for the best results.
-3. Create GEMINI.md files to customize your interactions with Gemini.
-4. /help for more information.
-
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ You are running Gemini CLI in your home directory. It is recommended to run in a project-specific directory.         │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-
-╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                                                      │
-│ ? Get started                                                                                                        │
-│                                                                                                                      │
-│   How would you like to authenticate for this project?                                                               │
-│                                                                                                                      │
-│   ● 1. Login with Google                                                                                             │
-│     2. Use Gemini API Key                                                                                            │
-│     3. Vertex AI                                                                                                     │
-│                                                                                                                      │
-│   No authentication method selected.                                                                                 │
-│                                                                                                                      │
-│   (Use Enter to select)                                                                                              │
-│                                                                                                                      │
-│   Terms of Services and Privacy Notice for Gemini CLI                                                                │
-│                                                                                                                      │
-│   https://github.com/google-gemini/gemini-cli/blob/main/docs/tos-privacy.md                                          │
-│                                                                                                                      │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-````
-
-- 「1. Login with Google」を選択して，指定されたURLにログイン。
-	- ログイン後，認可コードがブラウザに表示されるので，ターミナルに貼り付けると動く
-
-- `gemini`コマンドで起動するには以下でインストールする
-```shell
-→ sudo npm install -g @google/gemini-cli
-npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
-
-added 580 packages in 46s
-
-153 packages are looking for funding
-  run `npm fund` for details
-```
-
-- 以下コマンドで起動
-```shell
-gemini
-```
-
 ## Prompt
 - `/quit`でやめることができる
 	- もしくはCtrl+Dを２回
@@ -121,6 +52,52 @@ gemini
 ## Gemini Added Memories
 - 日本語で返してください
 ```
+
+## フォルダ構成
+- Gemini CLIでは以下のようなディレクトリの構成を取る
+- Claude Codeとは思想が異なり，階層的なコンテキストの結合と，MCPを中心として拡張に重きをおく
+```
+your-project/
+├── GEMINI.md                  # チームの指示・プロジェクト全体のコンテキスト (コミット対象)
+├── .geminiignore              # AIの読み取りから除外するファイル設定 (コミット対象)
+│
+├── frontend/
+│   └── GEMINI.md              # サブディレクトリ固有のルール (階層的に結合される)
+│
+└── .gemini/
+    ├── settings.json          # プロジェクト固有の設定 (グローバル設定を上書き)
+    ├── sandbox-macos.sb       # (任意) 安全にコマンドを実行するためのカスタムサンドボックス設定
+    └── sandbox.Dockerfile     # (任意) カスタムDockerサンドボックス環境
+    │
+    └── commands/              # カスタムスラッシュコマンド (拡張機能)
+        ├── review.toml        # → /review コマンドを定義
+        └── deploy.toml        # → /deploy コマンドを定義
+
+~/.gemini/                     # グローバル (ユーザー) ディレクトリ
+├── settings.json              # グローバル設定、MCPサーバー定義、UIテーマなど
+├── GEMINI.md                  # 全プロジェクトに適用されるあなたのグローバル指示
+├── .env                       # APIキーや環境変数 (ここに置くことも可能)
+├── commands/                  # グローバルなカスタムコマンド (.tomlファイル群)
+└── cache/                     # トークンキャッシュやセッション履歴などの内部データ
+```
+- `skills/` と `agents/` は「MCPサーバー」に集約される 
+	- Claude Codeのように専用のディレクトリを作ってプロンプトベースのWorkflow（スキルやエージェント）を管理するのではなく、Gemini CLIは業界標準の MCP (Model Context Protocol) の利用を推奨している
+    - Geminiでの運用: 
+	    - `~/.gemini/settings.json`（またはプロジェクトの `settings.json`）の `"mcpServers"` ブロックに、ローカルまたは外部のMCPサーバーを登録
+	    - これにより、コードレビュー用ツールやセキュリティ監査ツールなどを「外部ツール」としてAIにシームレスに提供
+- `rules/` は「ディレクトリごとの `GEMINI.md`」で代用する
+	- モジュール化されたルールファイル（`testing.md` など）を1箇所に集めるアプローチも可能だが、Gemini CLIの強みは階層型コンテキスト
+    - Geminiでの運用: 
+	    - フロントエンドのルールは `frontend/GEMINI.md` に、バックエンドの規約は `backend/GEMINI.md` に配置します。CLIを実行したディレクトリに応じて、ルートから現在のディレクトリまでの `GEMINI.md` が自動的に収集・マージされるため、必要なルールだけが動的に適用される
+- `CLAUDE.local.md` や `settings.local.json` のような個人用の上書き機能 
+	- Gemini CLIには、デフォルトで `.local` のつく予約ファイルはない
+    - Geminiでの運用: 
+	    - プロジェクトの `.gemini/settings.json` にて `"contextFileName": ["GEMINI.md", "GEMINI.local.md"]` と指定し、`GEMINI.local.md` を `.gitignore` に追加することで全く同じ運用が可能
+
+### settings.json
+https://geminicli.com/docs/reference/configuration/#settings-files
+- 設定ファイル
+
 ## 参照リンク
 - https://github.com/google-gemini/gemini-cli
 - https://zenn.dev/schroneko/articles/gemini-cli-tutorial
