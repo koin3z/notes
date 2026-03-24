@@ -14,7 +14,7 @@ description: Gemin CLI
 - `/quit`でやめることができる
 	- もしくはCtrl+Dを２回
 - `@ファイル名`でファイルを読み込ませる
-	- 例：`@package.json を見て、プロジェクトの概要を教えて`
+	- 例：`@package.json を見て，プロジェクトの概要を教えて`
 - `!コマンド` でシェルコマンドを実行。
 	- 例：`!ls -la` 
 	- escでもとに戻る
@@ -74,29 +74,51 @@ your-project/
         └── deploy.toml        # → /deploy コマンドを定義
 
 ~/.gemini/                     # グローバル (ユーザー) ディレクトリ
-├── settings.json              # グローバル設定、MCPサーバー定義、UIテーマなど
+├── settings.json              # グローバル設定，MCPサーバー定義，UIテーマなど
 ├── GEMINI.md                  # 全プロジェクトに適用されるあなたのグローバル指示
 ├── .env                       # APIキーや環境変数 (ここに置くことも可能)
 ├── commands/                  # グローバルなカスタムコマンド (.tomlファイル群)
 └── cache/                     # トークンキャッシュやセッション履歴などの内部データ
 ```
 - `skills/` と `agents/` は「MCPサーバー」に集約される 
-	- Claude Codeのように専用のディレクトリを作ってプロンプトベースのWorkflow（スキルやエージェント）を管理するのではなく、Gemini CLIは業界標準の MCP (Model Context Protocol) の利用を推奨している
+	- Claude Codeのように専用のディレクトリを作ってプロンプトベースのWorkflow（スキルやエージェント）を管理するのではなく，Gemini CLIは業界標準の MCP (Model Context Protocol) の利用を推奨している
     - Geminiでの運用: 
-	    - `~/.gemini/settings.json`（またはプロジェクトの `settings.json`）の `"mcpServers"` ブロックに、ローカルまたは外部のMCPサーバーを登録
-	    - これにより、コードレビュー用ツールやセキュリティ監査ツールなどを「外部ツール」としてAIにシームレスに提供
+	    - `~/.gemini/settings.json`（またはプロジェクトの `settings.json`）の `"mcpServers"` ブロックに，ローカルまたは外部のMCPサーバーを登録
+	    - これにより，コードレビュー用ツールやセキュリティ監査ツールなどを「外部ツール」としてAIにシームレスに提供
+	- とはいえ，Agent Skillsに対応しているようなので，`skills`ディレクトリは作成可能
+		- https://zenn.dev/hutonman/articles/47549ccf2ece12
+		- https://geminicli.com/docs/cli/skills/
 - `rules/` は「ディレクトリごとの `GEMINI.md`」で代用する
-	- モジュール化されたルールファイル（`testing.md` など）を1箇所に集めるアプローチも可能だが、Gemini CLIの強みは階層型コンテキスト
+	- モジュール化されたルールファイル（`testing.md` など）を1箇所に集めるアプローチも可能だが，Gemini CLIの強みは階層型コンテキスト
     - Geminiでの運用: 
-	    - フロントエンドのルールは `frontend/GEMINI.md` に、バックエンドの規約は `backend/GEMINI.md` に配置します。CLIを実行したディレクトリに応じて、ルートから現在のディレクトリまでの `GEMINI.md` が自動的に収集・マージされるため、必要なルールだけが動的に適用される
+	    - フロントエンドのルールは `frontend/GEMINI.md` に，バックエンドの規約は `backend/GEMINI.md` に配置します。CLIを実行したディレクトリに応じて，ルートから現在のディレクトリまでの `GEMINI.md` が自動的に収集・マージされるため，必要なルールだけが動的に適用される
 - `CLAUDE.local.md` や `settings.local.json` のような個人用の上書き機能 
-	- Gemini CLIには、デフォルトで `.local` のつく予約ファイルはない
+	- Gemini CLIには，デフォルトで `.local` のつく予約ファイルはない
     - Geminiでの運用: 
-	    - プロジェクトの `.gemini/settings.json` にて `"contextFileName": ["GEMINI.md", "GEMINI.local.md"]` と指定し、`GEMINI.local.md` を `.gitignore` に追加することで全く同じ運用が可能
+	    - プロジェクトの `.gemini/settings.json` にて `"contextFileName": ["GEMINI.md", "GEMINI.local.md"]` と指定し，`GEMINI.local.md` を `.gitignore` に追加することで全く同じ運用が可能
 
 ### settings.json
 https://geminicli.com/docs/reference/configuration/#settings-files
 - 設定ファイル
+
+## Claude Clode と比較しての Gemini Cli の思想について
+- Claude Codeの `skills/` や `agents/` は，基本的に「高度なプロンプト（自然言語の指示）の集まり」
+	- 仕組み:
+		- 「あなたはセキュリティ監査員です。コードを読むときは以下の手順に従いなさい…」といった指示をMarkdownファイルに書き，特定のフォルダにおく
+	- 特徴: 
+		- 自然言語で書けるため手軽だが，Claude Codeというツールの中でしか機能しない。また，基本的には「AIに対するテキストの指示」であるため，システムへの直接的なファイル操作や外部APIとの複雑な通信を行うには，LLM自身の能力やCLI側の暗黙の実装に強く依存する
+- Gemini CLIが推奨する「MCP (Model Context Protocol)」のアプローチ
+	- 一方の MCP (Model Context Protocol) は，「AIモデル」と「ローカルのデータやツール」を安全かつ標準的な方法で接続するために策定された業界標準のオープン規格
+	- 専用のフォルダにMarkdownを書かせる代わりに，このMCPに対応した「MCPサーバー（独立したプログラム）」を連携させる方法をとっている
+
+- これによって以下のようなメリットがある
+1. **ツール非依存（Write once, use everywhere）** 
+	- Claude Code専用のスキルを作るとClaude Codeでしか使えないが，MCPサーバーとして「セキュリティ監査ツール」や「GitHub連携ツール」を作れば，Gemini CLIだけでなく，Claude Desktop，Cursor，その他のMCP対応AIエディタのどれからでも全く同じように呼び出して使うことができる
+2.  **「指示」ではなく「確実なプログラム実行」**
+	- MCPサーバーはPythonやTypeScriptなどで書かれた実際のプログラム。
+	- AIに「データベースを調べて」とテキストで曖昧に指示するのではなく，MCPサーバーが提供する `query_database` という明確な機能（Tool）をAIが呼び出し，プログラムが確実にSQLを実行して結果をAIに返す。
+3. **セキュリティと権限の分離** 
+	- MCPサーバーはCLI本体とは別のプロセス（場合によってはDockerコンテナ内など）で動くため，「このMCPサーバーには読み取り権限しか与えない」といった細かなセキュリティ制御が可能
 
 ## 参照リンク
 - https://github.com/google-gemini/gemini-cli
