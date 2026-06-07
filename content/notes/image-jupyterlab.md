@@ -21,8 +21,8 @@ root@061ac190dbab:/# jupyter lab --ip=0.0.0.0 --allow-root
     To access the server, open this file in a browser:
         file:///root/.local/share/jupyter/runtime/jpserver-64-open.html
     Or copy and paste one of these URLs:
-        http://localhost:8888/lab?token=5ebbb7746dcd6c4eb181bea076360603694cb92c2c9e96f4
-        http://127.0.0.1:8888/lab?token=5ebbb7746dcd6c4eb181bea076360603694cb92c2c9e96f4
+        http://localhost:8888/lab?token=xxxxxxxxxxxxxxxxxx
+        http://127.0.0.1:8888/lab?token=xxxxxxxxxxxxxxxxxx
         
 docker run --rm -it \
   --publish 8888:8888 \
