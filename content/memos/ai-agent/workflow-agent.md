@@ -1,13 +1,13 @@
 ---
-title: Workflow
+title: Workflow Agent
 date: 2026-03-29
 update: 2026-03-29
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: このページの内容についての簡単な説明
+  - AI
+  - Agent
+  - Workflow
+description: Workflow Agent の種類、順次実行、条件分岐、ループなどの構成を整理する。
 ---
 ## Workflow Agent
 - サブエージェントの実行フローを制御する特殊なエージェント

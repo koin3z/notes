@@ -1,13 +1,17 @@
 ---
-title: Untitled
+title: 【OCI】DB Tools MCP Server を試す
 date: 2026-06-02
 update: 2026-06-02
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: このページの内容についての簡単な説明
+  - OCI
+  - Database Tools
+  - Oracle Database
+  - MCP
+  - OAuth
+description: >-
+  OCI Database Tools MCP Server を使用し、MCP クライアントから Oracle Database に接続してカスタム SQL
+  ツールを実行する手順を整理する。
 ---
 2026年5月12日、データベースへの接続機能を提供するOCIサービス「データベース・ツール」にMCPサーバーの機能が追加されました。Release Notes に以下の記載がある通り、Oracle Database へMCPを介してアクセスできるマネージドMCPサーバーとして利用することができます。
 

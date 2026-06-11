@@ -1,8 +1,11 @@
 ---
 title: 認可サーバー
 tags:
-  - 認証
-publish: "true"
+  - OAuth
+  - Authorization Server
+  - Authorization
+description: OAuth 認可サーバーのクライアント登録、認可エンドポイント、トークン発行処理を整理する。
+publish: 'true'
 ---
 ## 概要
 - OAuthフローにおいて，認可サーバーが行う役割は以下の通り

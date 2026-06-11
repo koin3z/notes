@@ -1,13 +1,12 @@
 ---
-title: OCI仕様
+title: OCI 仕様
 date: 2025-12-02
 update: 2025-12-02
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: このページの内容についての簡単な説明
+  - Container
+  - Open Container Initiative
+description: Open Container Initiative の Image Spec を中心にコンテナ仕様を整理する。
 ---
 - OCI (Open Container Initiative)にて標準化された仕様として，以下の3つがある
 	- **OCI Image-spec**

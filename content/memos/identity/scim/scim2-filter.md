@@ -4,10 +4,10 @@ date: 2026-04-04
 update: 2026-04-04
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: このページの内容についての簡単な説明
+  - SCIM
+  - Identity
+  - Filter
+description: SCIM 2.0 Filter の構文と例を整理する。
 ---
 ## SCIM フィルターについて
 - 多くのユーザーやグループの中から特定の条件に合致するリソースだけを抽出するための検索用語

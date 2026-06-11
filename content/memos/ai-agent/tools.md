@@ -1,13 +1,12 @@
 ---
-title: Tools
+title: Agent Tools
 date: 2026-03-29
 update: 2026-03-29
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: このページの内容についての簡単な説明
+  - AI
+  - Agent
+description: AI エージェントにおける Tool の役割、引数の扱い、実装例を整理する。
 ---
 ## 要素
 - 基本的な要素は次の３つ

@@ -1,8 +1,11 @@
 ---
 title: リソースサーバー
 tags:
-  - 認証
-publish: "true"
+  - OAuth
+  - Resource Server
+  - Authorization
+description: OAuth リソースサーバーでのトークン抽出、検証、レスポンス処理を整理する。
+publish: 'true'
 ---
 ## 概要
 

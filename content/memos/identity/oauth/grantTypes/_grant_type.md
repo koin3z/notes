@@ -4,10 +4,9 @@ date: 2025-11-20
 update: 2025-11-20
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: このページの内容についての簡単な説明
+  - OAuth
+  - Grant Type
+description: OAuth 2.0 の主要グラントタイプと認可/トークンリクエストを整理する。
 ---
 
 ### 認可リクエスト

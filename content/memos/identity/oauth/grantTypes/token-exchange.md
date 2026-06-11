@@ -1,5 +1,10 @@
 ---
 title: Token Exchange
+tags:
+  - OAuth
+  - Grant Type
+  - Token Exchange
+description: OAuth 2.0 Token Exchange の用語、背景、リクエスト/レスポンスを整理する。
 ---
 ## 用語
 - **STS (Security Token Service)**

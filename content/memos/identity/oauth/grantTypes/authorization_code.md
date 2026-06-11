@@ -4,10 +4,9 @@ date: 2025-12-06
 update: 2025-12-06
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: 認可コードフロー
+  - OAuth
+  - Grant Type
+description: OAuth 認可コードフローと PKCE の流れを整理する。
 ---
 ## 認可コードフロー
 

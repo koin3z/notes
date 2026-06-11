@@ -5,8 +5,7 @@ update: 2025-11-21
 draft: false
 tags:
   - Container
-aliases:
-  - 
+  - Docker
 description: Docker についてのまとめ
 ---
 ## Dockerとは

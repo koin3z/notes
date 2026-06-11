@@ -1,8 +1,11 @@
 ---
 title: OAuthクライアント
 tags:
-  - 認証
-publish: "true"
+  - OAuth
+  - Authentication
+  - Authorization
+description: OAuth クライアントの登録、認可リクエスト、トークン取得の処理を整理する。
+publish: 'true'
 ---
 
 ### 事前準備

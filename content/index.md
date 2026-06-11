@@ -1,5 +1,6 @@
 ---
-title: Welcome to Quartz
+title: メモ
+description: 技術メモ、検証記録、記事下書きを整理した個人用ナレッジベース。
 ---
 自身のメモとしてまとめているサイトです。
 

@@ -4,10 +4,10 @@ date: 2026-04-04
 update: 2026-04-04
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: このページの内容についての簡単な説明
+  - AI
+  - Spec Kit
+  - Development Workflow
+description: Spec Kit による仕様駆動の開発ワークフローを整理する。
 ---
 - GitHubが公開したオープンソースのツールキットで，AIコーディングエージェント（GitHub Copilot、Claude Code、Gemini CLIなど）と連携してSpec-Driven Development（仕様駆動開発）を実現するもの
 - 従来の「vibe-coding」（アイデアを伝えてコードを生成し、動かなければ修正を繰り返す）アプローチではなく、まず仕様（spec）を定義し、それを実装・テスト・検証の基盤とすることで、より品質の高いコードを生成

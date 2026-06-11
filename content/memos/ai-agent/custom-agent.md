@@ -4,10 +4,9 @@ date: 2026-03-30
 update: 2026-03-30
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: このページの内容についての簡単な説明
+  - AI
+  - Agent
+description: カスタムエージェントの InvocationContext、Event、Action、実装パターンを整理する。
 ---
 ## カスタム・エージェント
 https://adk-labs.github.io/adk-docs/ja/agents/custom-agents/

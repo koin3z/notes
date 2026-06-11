@@ -1,13 +1,12 @@
 ---
-title: Client Credential
+title: Client Credentials
 date: 2025-12-06
 update: 2025-12-06
 draft: false
 tags:
-  - 
-aliases:
-  - 
-description: クライアント資格証明
+  - OAuth
+  - Grant Type
+description: OAuth Client Credentials フローを整理する。
 ---
 
 ## フロー

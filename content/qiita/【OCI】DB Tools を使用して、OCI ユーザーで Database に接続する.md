@@ -8,9 +8,12 @@ tags:
   - Database Tools
   - Oracle Database
   - IAM
+  - OCI DB Tools IAM認証
 aliases:
   - OCI DB Tools IAM認証
-description: OCI Database Tools のトークン・ベース認証を使用し、OCI IAM ユーザーで Oracle Database に接続する手順を紹介します。
+description: >-
+  OCI Database Tools のトークン・ベース認証を使用し、OCI IAM ユーザーで Oracle Database
+  に接続する手順を紹介します。
 ---
 2026年5月12日、データベースへの接続機能を提供する OCI サービス「データベース・ツール」で、OCI IAM によるトークン・ベース認証がサポートされるようになりました。
 
