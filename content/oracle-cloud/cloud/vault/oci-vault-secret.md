@@ -101,7 +101,21 @@ Doc: [シークレットの編集](https://docs.oracle.com/ja-jp/iaas/Content/Ke
 
 
 ## ローテーション
--
+- シークレット作成または更新の際に、自動ローテーションをオンにできる。  
+- rotationInterval は 1day ~ 365days 内で設定できる。  
+- 設定値はISO 8601に従う  
+参考）[https://qiita.com/e99h2121/items/c298fee44ea4e57986c9](https://qiita.com/e99h2121/items/c298fee44ea4e57986c9)
+
+シークレットのメタデータを参照すると、**nextRotationTime** というパラメータにより、いつローテーションが行われるかは確認できる。  
+  
+なお、ローテーションの日時を指定することはできなさそう。  
+[https://docs.oracle.com/en-us/iaas/api/#/en/secretmgmt/20180608/Secret/](https://docs.oracle.com/en-us/iaas/api/#/en/secretmgmt/20180608/Secret/)
+
+そのため、任意のタイミングでローテーションしたい場合は、Functionなどで外部から以下を実行させてあげなきゃいけない。  
+[https://docs.oracle.com/en-us/iaas/api/#/en/secretmgmt/20180608/Secret/RotateSecret](https://docs.oracle.com/en-us/iaas/api/#/en/secretmgmt/20180608/Secret/RotateSecret)
+
+ちなみにコンソールからはこの選択肢しかないので、注意
+![[Pasted image 20260622231616.png]]
 
 ## シークレット・バンドル（シークレットの取得）
 Doc: https://docs.oracle.com/ja-jp/iaas/Content/KeyManagement/Concepts/keyoverview.htm
@@ -155,6 +169,7 @@ https://docs.oracle.com/ja-jp/iaas/Content/KeyManagement/Concepts/secrets-replic
 - OCIコンソールで書込み転送を有効にはできない。
 	- これらの操作には、[CreateSecret](https://docs.oracle.com/iaas/api/#/en/secretmgmt/latest/Secret/CreateSecret) APIおよび[UpdateSecret](https://docs.oracle.com/iaas/api/#/en/secretmgmt/latest/Secret/UpdateSecret) APIまたはCLIコマンドを使用して、書込み転送を有効にする。
 	- APIで、`isWriteForwardEnabled`を`true`に設定して機能を有効にする
+
 
 
 ## 参照リンク
