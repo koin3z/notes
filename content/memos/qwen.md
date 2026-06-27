@@ -1,7 +1,7 @@
 ---
 title: Qwen ローカル実行ガイド
 date: 2026-06-26
-update: 2026-06-27
+update: 2026-06-28
 draft: false
 tags:
   - LLM
@@ -88,6 +88,26 @@ ollama run qwen3:14b
 - **Neovim / VS Code 連携:** VS Code の `Continue` プラグインなどの接続先を `http://localhost:11434`（Ollama のデフォルト URL）に設定することで、ローカルの Qwen をコード補完アシスタントとして組み込むことができる。
 
 まずは `ollama run qwen3:14b`（または `qwen3:7b`）から試し、PC のファンがどれくらい回るか、速度にストレスがないかを確認するのがおすすめ。
+
+
+## OpenWebUI
+
+ChatGPT そっくりの画面をローカルに構築できるオープンソースの Web UI。Ollama との相性が最も良い。Docker などで起動すると、自動的にローカルの Ollama（Qwen2.5-vision）を検知する。チャット画面の「＋」ボタンやドラッグ＆ドロップで画像をアップロードし、そのまま Qwen に質問できる。
+
+ここでは Docker を使用する。
+
+```bash
+docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+```
+
+Open WebUI 自体は AI モデルを持たない。ブラウザ上で動作する「UI（画面）」を提供するだけの独立したシステム（コンテナ）として動作する。
+
+コマンド中の `--add-host=host.docker.internal:host-gateway` という設定が重要なポイント。この設定により、「独立した空間にいる Open WebUI」が「PC 本体で動いている Ollama」を自動的に見つけ出し、裏側で連携してデータをやり取りする仕組みになっている。
+
+- ダウンロードと起動が完了したら、ブラウザのアドレスバーに `http://localhost:3000` と入力してアクセスする。
+- ログイン画面が表示されたら「Sign Up（サインアップ）」をクリックし、名前・メールアドレス・パスワードを入力してアカウントを作成する。
+
+![[Pasted image 20260628005426.png]]
 
 ## 参照リンク
 
