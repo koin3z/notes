@@ -1,8 +1,22 @@
+---
+title: CODE_OF_CONDUCT
+date: 2026-06-28
+update: 2026-06-28
+draft: false
+tags:
+  - 
+aliases:
+  - 
+description: このページの内容についての簡単な説明
+---
 # Citizen Code of Conduct
 
 ## 1. Purpose
 
-A primary goal of the Quartz community is to be inclusive to the largest number of contributors, with the most varied and diverse backgrounds possible. As such, we are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, ability, ethnicity, socioeconomic status, and religion (or lack thereof).
+A primary goal of the Quartz community is to be inclusive to the largest number of contributors, with the most varied and diverse backgrounds possible. As such, we are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, ability, eth
+## 参照リンク
+- 
+nicity, socioeconomic status, and religion (or lack thereof).
 
 This code of conduct outlines our expectations for all those who participate in our community, as well as the consequences for unacceptable behavior.
 
