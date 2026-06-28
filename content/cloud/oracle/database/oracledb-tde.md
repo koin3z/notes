@@ -8,7 +8,7 @@ tags:
   - TDE
   - Security
 aliases:
-  - oracle-cloud/oracledb-tde
+  - cloud/oracle/oracledb-tde
 description: Oracle Database の Transparent Data Encryption (TDE) に関する参照メモ。
 ---
 

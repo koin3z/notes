@@ -8,7 +8,7 @@ tags:
   - Oracle Database
   - Upgrade
 aliases:
-  - oracle-cloud/oci-oracledb-update
+  - cloud/oracle/oci-oracledb-update
 description: OCI における Oracle Database のパッチ、RU、アップデート/アップグレード手順を整理する。
 ---
 

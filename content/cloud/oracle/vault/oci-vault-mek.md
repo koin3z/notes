@@ -8,7 +8,7 @@ tags:
   - Vault
   - KMS
 aliases:
-  - oracle-cloud/oci-vault-mek
+  - cloud/oracle/oci-vault-mek
 description: OCI Vault マスター暗号化キー
 ---
 ## 概要

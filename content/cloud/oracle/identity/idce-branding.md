@@ -8,7 +8,7 @@ tags:
   - Identity Domains
   - Branding
 aliases:
-  - oracle-cloud/idce-branding
+  - cloud/oracle/idce-branding
 description: OCI Identity Domains で設定できるログイン画面デザインとブランディングを整理する。
 ---
 ## 方法

@@ -8,7 +8,7 @@ tags:
   - Oracle Access Governance
   - Identity Governance
 aliases:
-  - oracle-cloud/access-governance-overview
+  - cloud/oracle/access-governance-overview
 description: Oracle Access Governance の要素、アクセスレビュー、ロール、キャンペーンを整理する。
 ---
 ## 要素

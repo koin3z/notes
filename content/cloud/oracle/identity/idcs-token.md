@@ -9,7 +9,7 @@ tags:
   - OAuth
   - OIDC
 aliases:
-  - oracle-cloud/idcs-token
+  - cloud/oracle/idcs-token
 description: Identity Domains で生成されるトークンサンプル
 ---
 OCI IAM Identity Domains で発行されるトークンのサンプル

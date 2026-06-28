@@ -8,7 +8,7 @@ tags:
   - Oracle Database
   - Backup
 aliases:
-  - oracle-cloud/oci-oracledb-backup
+  - cloud/oracle/oci-oracledb-backup
 description: OCI 上の Oracle Database バックアップで使う RCV/ZRCV の参照メモ。
 ---
 #### Zero Data Loss Autonomous Recovery Service

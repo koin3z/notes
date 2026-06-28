@@ -8,7 +8,7 @@ tags:
   - Vault
   - KMS
 aliases:
-  - oracle-cloud/oci-vault
+  - cloud/oracle/oci-vault
 description: OCI Vault 概要
 ---
 ## 概要

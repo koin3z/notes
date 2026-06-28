@@ -8,7 +8,7 @@ tags:
   - OCIR
   - Container Registry
 aliases:
-  - oracle-cloud/ocir
+  - cloud/oracle/ocir
 description: OCI コンテナレジストリ
 ---
 ocirのレジストリURLは以下の形式

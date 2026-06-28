@@ -8,7 +8,7 @@ tags:
   - Oracle Access Governance
   - Identity Governance
 aliases:
-  - oracle-cloud/access-governance-api
+  - cloud/oracle/access-governance-api
 description: Oracle Access Governance API のクライアント準備と参照リンクを整理する。
 ---
 ## クライアントの用意

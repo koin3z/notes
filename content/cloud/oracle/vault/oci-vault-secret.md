@@ -8,7 +8,7 @@ tags:
   - Vault
   - Secret
 aliases:
-  - oracle-cloud/oci-vault-secret
+  - cloud/oracle/oci-vault-secret
 description: OCI Vault シークレット
 ---
 ## 概要
