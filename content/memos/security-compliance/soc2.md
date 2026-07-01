@@ -1,47 +1,83 @@
 ---
-title: SOC2
+title: SOC 2
+date: 2026-07-01
+update: 2026-07-01
+draft: false
 tags:
   - Security
   - Compliance
   - SOC2
 aliases:
   - memos/soc2
-description: SOC2 の概要、SOC の種類、Type の違いを整理する。
+description: SOC 2 のTrust Services Criteria、Type 1・Type 2、報告書レビューの要点を整理する。
 ---
-> [!abstruct] 参照リンク
-> - [サービスの統制を保証する「SOC2」の概要をざっくりまとめてみた | DevelopersIO](https://dev.classmethod.jp/articles/soc2_overview/)
-> - [Sass: Syntactically Awesome Style Sheets](https://sass-lang.com/)
-> - [Sass Introduction](https://www.w3schools.com/sass/sass_intro.asp)
 
-## SOC2とは
-- Service Organization Control Type 2 の略
-- 米国公認会計士協会（AICPA）が定めたサイバーセキュリティのフレームワークの1つ
+## 概要
 
-SOC2 保証報告書は、米国公認会計士協会（AICPA）が定めたTrustサービス規準に基づいて提供されます。Trustサービス規準は、「セキュリティ」「可用性」「処理のインテグリティ」「機密保持」「プライバシー」の5つから構成され、この中から一つまたは複数の規準を選択し、評価が提供されます。
+SOC は System and Organization Controls の略で、AICPA が整備する保証業務の体系である。
+SOC 2 は、サービス組織のシステムと統制を Trust Services Criteria に基づいて独立した CPA が評価する
+保証報告書である。行政機関が付与する認証や、製品の安全性保証ではない。
 
+## Trust Services Criteria
 
-## SOCの種類
-### SOC
-そもそもSOCにはSOC1，SOC2，SOC3の３つがある。
-- **SOC1**
-	- その会社の財務報告に関連する内部統制の評価
-	- 情報システムを委託している顧客（ユーザー）が財務諸表監査にあたって内部統制の監査を受けた際に、事業者側の内部統制の情報としてSOC1の報告書を利用することができます。
-- **SOC2**
-	- 企業が監査してほしいサービスやシステムを対象に、セキュリティや可用性などの統制を評価
-	- 具体的には「セキュリティ」「可用性」「処理のインテグリティ」「機密保持」「プライバシー」の5つの指標があり、この中から任意の項目について評価を受けます。
-- **SOC3**
-	- SOC2と評価する規準は変わりませんが、前述のとおり、広く公開することを目的とします。そのためSOC2と比べ報告書は簡潔なものとなります。
-	- SOC3は公開情報なので誰でもDLできる
-		- [OCI (For the Period April 1, 2024 to September 30, 2024)](https://www.oracle.com/a/ocom/docs/oci-soc-3-report.pdf)
-		- [AWS (For the Period April 1, 2024 to March 31, 2025)](https://d1.awsstatic.com/whitepapers/compliance/AWS_SOC3.pdf)
+| Category             | 対象                                   |
+| -------------------- | -------------------------------------- |
+| Security             | 不正アクセス、不正利用、損傷からの保護 |
+| Availability         | 合意・約束した可用性を満たす運用       |
+| Processing Integrity | 処理の完全性、正確性、適時性、承認     |
+| Confidentiality      | 機密指定された情報の保護               |
+| Privacy              | 個人情報の収集、利用、保持、開示、廃棄 |
 
+Security は全 SOC 2 examination の共通カテゴリーで、その他はサービスと顧客要求に応じて対象となる。
+報告書ごとに選択カテゴリーを確認する。
 
+## Type 1とType 2
 
-### Type
-加えて，SOC1，SOC2には次の２つのTypeがある。
-- Type1
-	- 特定の時点における組織の標準システム及びプロセスを元に監査
-- Type2
-	- 一定期間（６ヶ月以上）の機関における組織の標準システム及びプロセスの監査
-	- 取得の難易度はこちらのほうが当然高い
+| 種類   | 評価対象                                       | 読み方                                 |
+| ------ | ---------------------------------------------- | -------------------------------------- |
+| Type 1 | 特定日時点のシステム記述と統制の設計           | 統制がその時点で適切に設計されているか |
+| Type 2 | 一定期間のシステム記述、統制の設計と運用有効性 | 統制が対象期間を通じて実際に機能したか |
 
+Type 2 の対象期間は報告書に記載される。「必ず6か月」などと固定せず、自社が依拠したい期間を十分に
+カバーしているか確認する。対象期間後は Bridge Letter などで重要変更や事象を補う場合があるが、
+これは新しい監査報告書ではない。
+
+## SOC 1・SOC 2・SOC 3
+
+- **SOC 1**: 利用企業の財務報告に係る内部統制（ICFR）に関係する統制
+- **SOC 2**: Trust Services Criteria に関係する統制。詳細を含み、利用が制限される報告書
+- **SOC 3**: SOC 2 と同じカテゴリーを基礎にするが、一般利用向けの簡潔な報告書
+
+ベンダーのセキュリティを評価したい場合でも、財務システムへの影響が目的なら SOC 1 も必要になり得る。
+
+## 報告書レビューの順序
+
+1. **監査人の意見**: 限定、除外、否定的意見などがないか
+2. **対象範囲**: 法人、サービス、システム、拠点、Trust Services Category
+3. **期間**: 自社の利用期間と重なるか
+4. **システム記述**: 境界、データ、インフラ、手順、人、委託先
+5. **統制とテスト**: テスト方法、サンプル、結果
+6. **例外**: 原因、件数、期間、影響、是正状況
+7. **Subservice Organization**: carve-out か inclusive か
+8. **CUEC**: Complementary User Entity Controls として顧客側に要求される統制
+9. **CSOC**: 委託先側で必要な補完的統制が示されているか
+10. **期末後の変化**: Bridge Letter、重大インシデント、サービス変更
+
+## Carve-outとInclusive
+
+- **Carve-out method**: 下位サービス組織の統制を SOC 2 の直接評価対象から外す
+- **Inclusive method**: 下位サービス組織の関連統制も報告書の対象に含める
+
+主要クラウドやデータセンターが carve-out されている場合、その事業者の報告書や責任共有を別途確認する。
+
+## よくある誤解
+
+- 「SOC 2 compliant」という表示だけでは、Type、期間、範囲、意見、例外が分からない
+- Type 2 でも、報告書の対象外サービスや顧客の誤設定は保証されない
+- 例外が1件あるだけで直ちに不適格とは限らず、母集団、影響、再発性、是正を評価する
+- SOC 2 と ISO/IEC 27001 は目的と評価方法が異なり、相互に同一ではない
+
+## 参照リンク
+
+- [AICPA System and Organization Controls](https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services)
+- [AICPA SOC for Service Organizations Overview](https://www.aicpa-cima.com/soc4so?exec=cydoc)
