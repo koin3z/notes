@@ -1,5 +1,5 @@
 ---
-title: セキュリティ・コンプライアンス入門
+title: Security Compliance
 date: 2026-07-01
 modified: 2026-07-02
 draft: false
