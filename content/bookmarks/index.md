@@ -1,7 +1,9 @@
 ---
 title: Bookmarks
-description: 参考になったWebサイトのリンクとメモ。
+draft: false
 tags:
-  - bookmark
+  - type/bookmark
+description: 参考になったWebサイトのリンクとメモ。
 ---
+
 参考になったWebサイトのリンクとメモをまとめます。

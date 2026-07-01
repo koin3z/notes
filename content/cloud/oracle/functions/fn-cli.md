@@ -1,17 +1,17 @@
 ---
 title: Fn CLI
 date: 2026-03-29
-update: 2026-03-29
+modified: 2026-03-29
 draft: false
 tags:
-  - OCI
-  - Functions
-  - Fn Project
+  - cloud/oci/functions
 aliases:
   - memos/fn-cli
 description: ARM 環境で Fn CLI を利用するためのインストール代替手順を整理する。
 ---
+
 ## インストール
+
 - インストール自体は[ここの手順](https://docs.oracle.com/ja-jp/iaas/Content/Functions/Tasks/functionsinstallfncli.htm)でできるが，ARMインスタンスの場合，以下のエラーがでる
 
 ```shell
@@ -22,6 +22,7 @@ sh: 58: fn: Exec format error
 - そのため，ここでは別の方法を扱う。
 
 **方法1: ソースからビルド**
+
 - Fn CLIはGoで書かれているため、ARM64インスタンス上でソースからビルドする
 
 ```shell
@@ -50,6 +51,7 @@ fn version
 ```
 
 **方法2: OCI Cloud Shell の利用**
+
 - OCI Cloud Shellを使用する場合、Fn Project CLIは既にインストールされている
 - Cloud ShellからOCI Functionsへのデプロイを行い、ARMインスタンスでは関数の実行のみを行う
 
@@ -72,11 +74,12 @@ services:
     stdin_open: true
     entrypoint: ["/bin/sh"]
 ```
-- Docker Socket マウント: 
-	- Fn CLI は内部で Docker コンテナをビルド・起動するため，ホストの Docker デーモンを操作できるように `/var/run/docker.sock` を共有させる必要がある
-- FN_API_URL: 
-	- Fn Server を別途動かしている場合，そのエンドポイントを指定する
-	- 同じ Compose 内に server を入れる場合はサービス名で指定可能
+
+- Docker Socket マウント:
+  - Fn CLI は内部で Docker コンテナをビルド・起動するため，ホストの Docker デーモンを操作できるように `/var/run/docker.sock` を共有させる必要がある
+- FN_API_URL:
+  - Fn Server を別途動かしている場合，そのエンドポイントを指定する
+  - 同じ Compose 内に server を入れる場合はサービス名で指定可能
 
 ```
 # コンテナを起動
@@ -88,5 +91,7 @@ docker compose exec fn-cli sh
 # コンテナ内で `fn` を実行する
 fn version
 ```
+
 ## 参照リンク
-- 
+
+-

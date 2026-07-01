@@ -1,19 +1,17 @@
 ---
 title: cgroup（Control Groups）
 date: 2026-06-07
-update: 2026-06-07
+modified: 2026-06-07
 draft: false
 tags:
-  - Linux
-  - Container
-  - cgroups
+  - linux/cgroups
+  - containers
 aliases:
   - cgroups
   - memos/cgroup
-description: >-
-  Linux cgroup の基本、cgroup v1/v2 の構成差分、v2 のファイル構成、systemd・Docker・Kubernetes
-  との関係を整理する。
+description: Linux cgroup の基本、cgroup v1/v2 の構成差分、v2 のファイル構成、systemd・Docker・Kubernetes との関係を整理する。
 ---
+
 # cgroup（Control Groups）
 
 ## 1. cgroup とは何か
@@ -39,14 +37,14 @@ description: >-
 
 ### 主なコントローラ（サブシステム）
 
-| コントローラ         | 制御対象                           |
-| -------------- | ------------------------------ |
-| `cpu`          | CPU時間の割り当て・制限                  |
-| `memory`       | メモリ使用量の制限                      |
-| `blkio` / `io` | ブロックI/Oの制御（v1は`blkio`、v2は`io`） |
-| `pids`         | プロセス数の制限                       |
-| `cpuset`       | 使用できるCPUコアの固定                  |
-| `net_cls`      | ネットワークパケットへのクラスID付与（v1系の仕組み）   |
+| コントローラ   | 制御対象                                             |
+| -------------- | ---------------------------------------------------- |
+| `cpu`          | CPU時間の割り当て・制限                              |
+| `memory`       | メモリ使用量の制限                                   |
+| `blkio` / `io` | ブロックI/Oの制御（v1は`blkio`、v2は`io`）           |
+| `pids`         | プロセス数の制限                                     |
+| `cpuset`       | 使用できるCPUコアの固定                              |
+| `net_cls`      | ネットワークパケットへのクラスID付与（v1系の仕組み） |
 
 ---
 
@@ -208,15 +206,15 @@ cpuset.cpus.exclusive   hugetlb.32MB.events.local        memory.oom.group
 
 cgroup v2 では同じディレクトリにすべてのコントローラのファイルが混在する。プレフィックスでどのコントローラのファイルかを区別する。
 
-|プレフィックス|種別|役割|
-|---|---|---|
-|`cgroup.`|コア（特殊）|cgroup 階層の**構造管理**自体。リソース制御ではない|
-|`cpu.`|CPUコントローラ|CPU 使用率・帯域の制限・重み付け|
-|`memory.`|メモリコントローラ|メモリ使用量の制限・計測|
-|`io.`|I/Oコントローラ|ブロックデバイスの読み書き制限|
-|`pids.`|PIDs コントローラ|プロセス数の上限|
-|`cpuset.`|cpuset コントローラ|使用するCPUコア・NUMAノードの指定|
-|`hugetlb.`|hugetlb コントローラ|Huge Page の制限|
+| プレフィックス | 種別                 | 役割                                                |
+| -------------- | -------------------- | --------------------------------------------------- |
+| `cgroup.`      | コア（特殊）         | cgroup 階層の**構造管理**自体。リソース制御ではない |
+| `cpu.`         | CPUコントローラ      | CPU 使用率・帯域の制限・重み付け                    |
+| `memory.`      | メモリコントローラ   | メモリ使用量の制限・計測                            |
+| `io.`          | I/Oコントローラ      | ブロックデバイスの読み書き制限                      |
+| `pids.`        | PIDs コントローラ    | プロセス数の上限                                    |
+| `cpuset.`      | cpuset コントローラ  | 使用するCPUコア・NUMAノードの指定                   |
+| `hugetlb.`     | hugetlb コントローラ | Huge Page の制限                                    |
 
 `cgroup.` は特殊。リソース制限ではなく、cgroup の骨格（メンバー・構造・状態）を管理する。
 
@@ -274,17 +272,17 @@ cat /sys/fs/cgroup/myapp/memory.pressure
 
 ## 4. v1 vs v2 比較
 
-|観点|cgroup v1|cgroup v2|
-|---|---|---|
-|**階層**|コントローラごとに独立|単一の統合ツリー|
-|**マウント数**|コントローラ数分|1つ|
-|**プロセス管理**|`tasks`（スレッド単位も可）|`cgroup.procs`（プロセス単位）|
-|**スレッド制御**|混在|`cgroup.threads` で明示的に分離|
-|**権限委譲**|困難|`subtree_control` で明確|
-|**コントローラ有効化**|マウント時に決定|`subtree_control` で動的に制御|
-|**リソース設定書式**|コントローラごとにバラバラ|統一・整理|
-|**PSI**|統一的な per-cgroup PSI はない|`memory.pressure` 等で利用可能|
-|**統一エンティティ**|扱いにくい（コントローラごとに階層が分かれる）|扱いやすい（単一ツリーのグループ）|
+| 観点                   | cgroup v1                                      | cgroup v2                          |
+| ---------------------- | ---------------------------------------------- | ---------------------------------- |
+| **階層**               | コントローラごとに独立                         | 単一の統合ツリー                   |
+| **マウント数**         | コントローラ数分                               | 1つ                                |
+| **プロセス管理**       | `tasks`（スレッド単位も可）                    | `cgroup.procs`（プロセス単位）     |
+| **スレッド制御**       | 混在                                           | `cgroup.threads` で明示的に分離    |
+| **権限委譲**           | 困難                                           | `subtree_control` で明確           |
+| **コントローラ有効化** | マウント時に決定                               | `subtree_control` で動的に制御     |
+| **リソース設定書式**   | コントローラごとにバラバラ                     | 統一・整理                         |
+| **PSI**                | 統一的な per-cgroup PSI はない                 | `memory.pressure` 等で利用可能     |
+| **統一エンティティ**   | 扱いにくい（コントローラごとに階層が分かれる） | 扱いやすい（単一ツリーのグループ） |
 
 ### 本質的な違い
 
@@ -295,11 +293,11 @@ cat /sys/fs/cgroup/myapp/memory.pressure
 
 v2 では `memory.xxx`、`cpu.xxx` というプレフィックスつきファイルが同じディレクトリに並ぶ。
 
-|v1のパス|v2での相当するパス|
-|---|---|
-|`/sys/fs/cgroup/memory/<group>/memory.limit_in_bytes`|`/sys/fs/cgroup/<group>/memory.max`|
-|`/sys/fs/cgroup/cpu/<group>/cpu.cfs_quota_us`|`/sys/fs/cgroup/<group>/cpu.max`|
-|`/sys/fs/cgroup/blkio/<group>/...`|`/sys/fs/cgroup/<group>/io.max`|
+| v1のパス                                              | v2での相当するパス                  |
+| ----------------------------------------------------- | ----------------------------------- |
+| `/sys/fs/cgroup/memory/<group>/memory.limit_in_bytes` | `/sys/fs/cgroup/<group>/memory.max` |
+| `/sys/fs/cgroup/cpu/<group>/cpu.cfs_quota_us`         | `/sys/fs/cgroup/<group>/cpu.max`    |
+| `/sys/fs/cgroup/blkio/<group>/...`                    | `/sys/fs/cgroup/<group>/io.max`     |
 
 ---
 
@@ -363,12 +361,12 @@ Kubernetes が v2 を推進した主な理由：
 
 ### カーネルバージョン
 
-|カーネル|出来事|
-|---|---|
-|2.6.24 (2008)|cgroup v1 導入|
-|4.5 (2016)|cgroup v2 導入|
-|5.0+|v2 が本格的に安定|
-|現在|v1/v2 のハイブリッドマウントも可能だが非推奨|
+| カーネル      | 出来事                                       |
+| ------------- | -------------------------------------------- |
+| 2.6.24 (2008) | cgroup v1 導入                               |
+| 4.5 (2016)    | cgroup v2 導入                               |
+| 5.0+          | v2 が本格的に安定                            |
+| 現在          | v1/v2 のハイブリッドマウントも可能だが非推奨 |
 
 ### 現在のシステムが v1 か v2 かを確認する
 
@@ -399,15 +397,16 @@ cpuset cpu io memory hugetlb pids rdma misc dmem
 cpuset cpu io memory pids
 ```
 
-|項目|この環境|
-|---|---|
-|バージョン|**cgroup v2（pure unified）**|
-|マウント数|1つ（`/sys/fs/cgroup` のみ）|
-|v1マウント|なし（`/sys/fs/cgroup/memory` 等は存在しない）|
-|管理者|systemd（`system.slice` / `user.slice` で管理）|
-|カーネル|6.17系（v2がデフォルトになった世代）|
+| 項目       | この環境                                        |
+| ---------- | ----------------------------------------------- |
+| バージョン | **cgroup v2（pure unified）**                   |
+| マウント数 | 1つ（`/sys/fs/cgroup` のみ）                    |
+| v1マウント | なし（`/sys/fs/cgroup/memory` 等は存在しない）  |
+| 管理者     | systemd（`system.slice` / `user.slice` で管理） |
+| カーネル   | 6.17系（v2がデフォルトになった世代）            |
 
 Ubuntu 21.10以降・RHEL9以降・Debian 12以降などの比較的新しいOSはデフォルトで pure cgroup v2 になっている。技術書が古いと v1 前提の説明になっているため、ディレクトリ構成が全く異なって見える。
 
 ## 参考リンク
+
 https://gihyo.jp/admin/serial/01/linux_containers/0037

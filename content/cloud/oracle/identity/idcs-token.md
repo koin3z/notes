@@ -1,17 +1,17 @@
 ---
 title: Identity Domains で生成されるトークンサンプル
 date: 2025-11-23
-update: 2025-11-23
+modified: 2025-11-23
 draft: false
 tags:
-  - OCI
-  - Identity Domains
-  - OAuth
-  - OIDC
+  - cloud/oci/identity
+  - identity/oauth
+  - identity/oidc
 aliases:
   - cloud/oracle/idcs-token
 description: Identity Domains で生成されるトークンサンプル
 ---
+
 OCI IAM Identity Domains で発行されるトークンのサンプル
 
 ## Access Token
@@ -55,9 +55,7 @@ OCI IAM Identity Domains で発行されるトークンのサンプル
   "client_tenantname": "idcs-<domainUrl>",
   "region_name": "us-ashburn-idcs-1",
   "user_lang": "en",
-  "userAppRoles": [
-    "Authenticated"
-  ],
+  "userAppRoles": ["Authenticated"],
   "exp": 1763909141,
   "iat": 1763905541,
   "client_guid": "<applicationId>",
@@ -117,7 +115,8 @@ OCI IAM Identity Domains で発行されるトークンのサンプル
   "idp_name": "UserNamePassword",
   "sidle": 480,
   "idp_guid": "UserNamePassword",
-  "amr": [ // 使用された認証方法
+  "amr": [
+    // 使用された認証方法
     "USERNAME_PASSWORD"
   ],
   "iss": "https://identity.oraclecloud.com/", // トークンを発行したプリンシパル（認可サーバー）
@@ -140,15 +139,12 @@ OCI IAM Identity Domains で発行されるトークンのサンプル
   "client_guid": "<applicationId>",
   "idp_type": "LOCAL",
   "tenant": "idcs-<domainUrl>",
-  "jti": "a2d76d76fd8a49b5b2790fc7f3f18172",  // JWT ID
+  "jti": "a2d76d76fd8a49b5b2790fc7f3f18172", // JWT ID
   "user_displayname": "user-dev-01",
   "sub_mappingattr": "userName",
   "primTenant": false,
   "tok_type": "IT", // Token Type
-  "aud": [
-    "https://identity.oraclecloud.com/",
-    "<client_id>"
-  ],
+  "aud": ["https://identity.oraclecloud.com/", "<client_id>"],
   "ca_name": "<tenancyName>",
   "user_id": "c7dfb14d6530414e97dd2064fe23c695",
   "domain": "koit-domain-iad-dev",
@@ -157,21 +153,20 @@ OCI IAM Identity Domains で発行されるトークンのサンプル
 }
 ```
 
-
-## UserInfo 
+## UserInfo
 
 - `openid` だけでも以下の情報は得られる
 
 ```json
 {
-    "birthdate": "",
-    "family_name": "user-dev-01",
-    "gender": "",
-    "name": "user-dev-01",
-    "preferred_username": "User01 - Dev Domain",
-    "sub": "User01 - Dev Domain",
-    "updated_at": 1763905537,
-    "website": ""
+  "birthdate": "",
+  "family_name": "user-dev-01",
+  "gender": "",
+  "name": "user-dev-01",
+  "preferred_username": "User01 - Dev Domain",
+  "sub": "User01 - Dev Domain",
+  "updated_at": 1763905537,
+  "website": ""
 }
 ```
 
@@ -183,22 +178,20 @@ https://idcs-<domainUrl>.identity.oraclecloud.com/ui/v1/myconsole/consent
 
 ![[Pasted image 20251123231323.png]]
 
-
 ```json
 {
-    "birthdate": "",
-    "email": "<alice@wonderland.com>",
-    "email_verified": true,
-    "family_name": "user-dev-01",
-    "gender": "",
-    "name": "user-dev-01",
-    "preferred_username": "User01 - Dev Domain",
-    "sub": "User01 - Dev Domain",
-    "updated_at": 1763905537,
-    "website": ""
+  "birthdate": "",
+  "email": "<alice@wonderland.com>",
+  "email_verified": true,
+  "family_name": "user-dev-01",
+  "gender": "",
+  "name": "user-dev-01",
+  "preferred_username": "User01 - Dev Domain",
+  "sub": "User01 - Dev Domain",
+  "updated_at": 1763905537,
+  "website": ""
 }
 ```
-
 
 ## 認証トークン
 
@@ -207,14 +200,14 @@ https://idcs-<domainUrl>.identity.oraclecloud.com/ui/v1/myconsole/consent
 
 ```json
 {
-    "authnToken": "eyJ4NXQjUzI1NiI6I...",
-    "status": "success",
-    "ecId": "xxxxxxxxxxxxx" // ユーザー識別子
+  "authnToken": "eyJ4NXQjUzI1NiI6I...",
+  "status": "success",
+  "ecId": "xxxxxxxxxxxxx" // ユーザー識別子
 }
 ```
 
 - アプリケーションはこの `authToken` を使用してアクセストークンを取得することができる
-	- グラントタイプはJWT
+  - グラントタイプはJWT
 
 ```
 grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer
@@ -249,9 +242,7 @@ assertion={{authnToken}}
   "idp_name": "UserNamePassword",
   "sidle": 480,
   "idp_guid": "UserNamePassword",
-  "amr": [
-    "USERNAME_PASSWORD"
-  ],
+  "amr": ["USERNAME_PASSWORD"],
   "iss": "https://identity.oraclecloud.com/",
   "user_tenantname": "idcs-<domainUrl>",
   "ca_ocid": "ocid1.tenancy.oc1..<tenantOcid>",
@@ -278,11 +269,7 @@ assertion={{authnToken}}
   "sub_mappingattr": "userName",
   "primTenant": false,
   "tok_type": "IT",
-  "aud": [
-    "https://identity.oraclecloud.com/",
-    "<client_id>",
-    "Postman"
-  ],
+  "aud": ["https://identity.oraclecloud.com/", "<client_id>", "Postman"],
   "ca_name": "koitenancy",
   "user_id": "c7dfb14d6530414e97dd2064fe23c695",
   "domain": "koit-domain-iad-dev",
@@ -291,7 +278,7 @@ assertion={{authnToken}}
 }
 ```
 
-
 ## 参照リンク
+
 - https://docs.oracle.com/ja-jp/iaas/Content/Identity/api-getstarted/usingopenidconnect.htm
 - https://www.slideshare.net/slideshow/ochacafe5/141546360

@@ -1,18 +1,20 @@
 ---
 title: Oracle Access Governance
 date: 2026-04-19
-update: 2026-04-19
+modified: 2026-04-19
 draft: false
 tags:
-  - OCI
-  - Oracle Access Governance
-  - Identity Governance
+  - cloud/oci/identity
+  - security/compliance
 aliases:
   - cloud/oracle/access-governance-overview
 description: Oracle Access Governance の要素、アクセスレビュー、ロール、キャンペーンを整理する。
 ---
+
 ## 要素
+
 ### アイデンティティコレクション (Identity Collections)
+
 「誰が」
 
 - 共有属性に基づいて定義されたユーザーアイデンティティのグループ
@@ -21,6 +23,7 @@ description: Oracle Access Governance の要素、アクセスレビュー、ロ
 - 例えば「経理部かつ東京拠点」というルールでコレクションを作っておけば、人事異動でメンバーが変わっても自動的に追従します。
 
 ### アクセスバンドル (Access Bundles)
+
 「何にアクセスできるか」
 
 - アプリケーションまたはサービスに関連する権限 (permissions) のコレクション
@@ -31,6 +34,7 @@ description: Oracle Access Governance の要素、アクセスレビュー、ロ
 ![[Pasted image 20260419130144.png]]
 
 ### ロール
+
 「1つ以上のアプリケーションとサービスのアクセス・バンドルのグループ」
 
 - ロールベースのアクセス制御(RBAC)は、ユーザーが持っているロールに基づいてリソースへのアクセスを制御する方法です。
@@ -38,11 +42,12 @@ description: Oracle Access Governance の要素、アクセスレビュー、ロ
 
 - 1つのロールに含まれるアクセス・バンドルは、複数のターゲットにまたがることができます。
 - たとえば、データベース管理者のロールで、OracleのDB管理をグループ化できます。
-	- DB Admin for DB2およびDB Admin for MySQLアクセス・バンドル。
+  - DB Admin for DB2およびDB Admin for MySQLアクセス・バンドル。
 - これにより、そのロールを実行するために関連するアクセス・バンドルを組み合せたロールを作成できます。
 - これらのロールは、ポリシーを介してアイデンティティに関連付けることができます。デフォルトでは、ロールはリソースへのアクセスを提供しません。ポリシーまたはセルフサービス・リクエストによってロールがそのアイデンティティに割り当てられると、アイデンティティにアクセス権が付与されます。ロールはロール管理者によって管理され、アクセス・カタログからリクエストできます。
 
 ### ポリシー (Policies)
+
 「「誰 → 何」を結ぶ規則」
 
 - アイデンティティコレクションをロールまたはアクセスバンドルに関連付けるのがポリシーです。
@@ -50,45 +55,47 @@ description: Oracle Access Governance の要素、アクセスレビュー、ロ
 
 ![[Pasted image 20260419130208.png]]
 
-### 企業規模ブラウザ (Enterprise-wide Browser) 
+### 企業規模ブラウザ (Enterprise-wide Browser)
+
 「横断的な可視化レイヤー」
 
 - 「Who has Access to What」メニュー配下の機能で、エンタープライズ全体のアクセス情報を、Identities / Identity Collections / Roles / Permissions / Policies / Resources / Organizations といった複数のパースペクティブから閲覧できるものです。
 - 例えば Permissions ビューで Access Bundle を選ぶと、関連するアイデンティティ、アイデンティティコレクション、ロール、ポリシーをまとめて確認できます。
 - さらに重要なのは、この画面から identities / policies / identity collections に対するアクセスレビューをその場で生成できる点で、可視化と是正が地続きになっています。
 
-
 ### アクセスレビューキャンペーン (Access Review Campaigns)
+
 「検証プロセス」
 
 - オンデマンドで実行される、企業内メンバーに対するアクセスレビューの集合体で、特定のソースへの個別アクセスを「認証 (certify)」または「是正 (remediate)」するためのもの [Oracle](https://docs.oracle.com/en/cloud/paas/access-governance/agcac/index.html)です。ユーザー (誰がアクセスしているか)、アプリケーション (何にアクセスしているか)、権限 (どの権限か)、ロール (どのロールか) をベースに選定基準を定義可能 [Oracle](https://docs.oracle.com/en/cloud/paas/access-governance/agcac/index.html)で、ワンタイム実行と定期実行 (キャンペーンシリーズ) のいずれにも対応します。
 
 - 次のタイプのキャンペーンがある
-	- **ユーザー・アクセス・レビュー・キャンペーン**
-	- **ポリシー・レビュー・キャンペーン**
-	- **イベントベースのアクセス・レビュー**
-	- **アイデンティティ収集レビュー・キャンペーン**
-
+  - **ユーザー・アクセス・レビュー・キャンペーン**
+  - **ポリシー・レビュー・キャンペーン**
+  - **イベントベースのアクセス・レビュー**
+  - **アイデンティティ収集レビュー・キャンペーン**
 
 ## アイデンティティ
+
 - アクセスガバナンスで管理するユーザーのこと
 - 次の２つのタイプがある
-	- アクティブ
-	- コンシューマ
+
+  - アクティブ
+  - コンシューマ
 
 - **アクティブ**
-	- メンバーシップ・ルール条件を定義し，そのルールに該当するユーザー郡を設定
-	- もちろん個別指定も可
+  - メンバーシップ・ルール条件を定義し，そのルールに該当するユーザー郡を設定
+  - もちろん個別指定も可
 
 ![[Pasted image 20260419133224.png]]
 
 - **コンシューマ**
-	- サービスにアクセスできないユーザー
-
+  - サービスにアクセスできないユーザー
 
 ## オーケストレート済システム
-- 
 
+-
 
 ## 参照リンク
-- 
+
+-

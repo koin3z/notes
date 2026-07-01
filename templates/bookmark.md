@@ -1,22 +1,16 @@
 ---
-title: bookmark
+title: <% tp.file.title %>
 url:
-date: 2026-06-28
-tags:
-  - bookmark
-  - 
-description: このページの内容についての簡単な説明
-update: 2026-06-28
+date: <% tp.date.now("YYYY-MM-DD") %>
+modified: <% tp.date.now("YYYY-MM-DD") %>
 draft: false
-aliases:
-  -
+tags:
+  - type/bookmark
+description: このページの内容についての簡単な説明
 ---
 
 ## 参照リンク
-- 
+
+-
 
 ## メモ
-
-
-## 参照リンク
-- 

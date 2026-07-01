@@ -1,14 +1,10 @@
 ---
 title: mount
 date: 2026-06-28
-update: 2026-06-28
+modified: 2026-06-28
 draft: false
 tags:
-  - Linux
-  - Filesystem
-  - Container
-aliases:
-  -
+  - linux/filesystems
 description: Linux のマウント、バインドマウント、mount namespace、確認コマンドを整理する。
 ---
 

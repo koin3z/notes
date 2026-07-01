@@ -1,11 +1,10 @@
 ---
 title: OCI Oracle Database バックアップ
 date: 2026-01-09
-update: 2026-07-01
+modified: 2026-07-01
 draft: false
 tags:
-  - OCI
-  - Backup
+  - cloud/oci/database
 aliases:
   - cloud/oracle/oci-oracledb-backup
 description: OCI 上の Oracle Database バックアップと Autonomous Recovery Service の選択・運用メモ。

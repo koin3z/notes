@@ -1,12 +1,10 @@
 ---
 title: OCI における Oracle Database のアップデート／アップグレード
 date: 2026-01-09
-update: 2026-07-01
+modified: 2026-07-01
 draft: false
 tags:
-  - OCI
-  - Oracle Database
-  - Upgrade
+  - cloud/oci/database
 aliases:
   - cloud/oracle/oci-oracledb-update
 description: OCI Base Database Service の更新、メジャーアップグレード、移行の違いと実施時の確認事項。

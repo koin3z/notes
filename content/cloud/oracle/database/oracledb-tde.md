@@ -1,12 +1,11 @@
 ---
 title: Oracle Database TDE
 date: 2026-01-09
-update: 2026-07-01
+modified: 2026-07-01
 draft: false
 tags:
-  - Oracle Database
-  - TDE
-  - Security
+  - cloud/oci/database
+  - security/cryptography
 aliases:
   - cloud/oracle/oracledb-tde
 description: Oracle Database の Transparent Data Encryption と OCI 移行時の暗号化に関するメモ。

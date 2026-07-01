@@ -1,13 +1,10 @@
 ---
 title: Oracle Database パッチ種別
 date: 2026-06-18
-update: 2026-07-01
+modified: 2026-07-01
 draft: false
 tags:
-  - Oracle Database
-  - Patch
-  - Security
-aliases: []
+  - cloud/oci/database
 description: Oracle Database の CPU、CSPU、RU、MRP、個別パッチとコンポーネント別パッチの関係を整理する。
 ---
 
