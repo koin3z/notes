@@ -1,5 +1,5 @@
 ---
-title: Bookmarks
+title: bookmarks
 draft: false
 tags:
   - type/bookmark

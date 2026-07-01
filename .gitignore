@@ -8,4 +8,23 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
-AGENTS.md
+
+# Codex local/raw working material
+.codex-local/
+docs/codex/raw/
+docs/codex/private/
+docs/codex/*.log
+docs/codex/*.local.*
+docs/codex/*-raw.*
+
+# Secret-bearing local files
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json

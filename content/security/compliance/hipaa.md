@@ -1,7 +1,7 @@
 ---
 title: HIPAA
 date: 2026-07-01
-modified: 2026-07-01
+modified: 2026-07-02
 draft: false
 tags:
   - security/compliance
@@ -65,6 +65,19 @@ Security Rule の実装仕様には Required と Addressable がある。Address
 Covered Entity へ通知する。
 
 具体的な該当性、例外、リスク評価、州法のより厳しい期限は、インシデントごとに法務と確認する。
+
+```mermaid
+flowchart LR
+    CE["Covered Entity"] -->|"BAA・許可された目的"| BA["Business Associate"]
+    BA -->|"契約・同等の保護義務"| SC["Subcontractor"]
+    CE -->|"PHIを利用・開示"| PHI["PHI"]
+    BA -->|"業務のため処理"| PHI
+    SC -->|"再委託業務で処理"| PHI
+    PHI -->|"電子媒体で扱う場合"| EPHI["ePHI<br/>Security Rule の対象"]
+    SC -->|"侵害を通知"| BA
+    BA -->|"侵害を通知"| CE
+    CE -->|"必要に応じて通知"| N["本人・HHS・場合によりメディア"]
+```
 
 ## クラウド利用時の確認ポイント
 
